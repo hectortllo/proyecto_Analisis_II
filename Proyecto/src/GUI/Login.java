@@ -21,6 +21,7 @@ public class Login extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         txtUsuario.setBackground(new Color(0,0,0,0));
         pswContrasenia.setBackground(new Color(0,0,0,0));
+        btnEntrar.setBackground(new Color(0,0,0,0));
     }
 
     /**
@@ -33,6 +34,7 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        btnEntrar = new javax.swing.JButton();
         txtUsuario = new javax.swing.JTextField();
         pswContrasenia = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
@@ -41,6 +43,9 @@ public class Login extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(btnEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 160, 40));
 
         txtUsuario.setBorder(null);
         jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 143, 150, 30));
@@ -94,6 +99,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEntrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField pswContrasenia;
