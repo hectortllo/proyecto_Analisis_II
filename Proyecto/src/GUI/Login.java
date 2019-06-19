@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import gt.edu.url.clases.Persona;
 import java.awt.Color;
 
 /**
@@ -13,15 +14,17 @@ import java.awt.Color;
  */
 public class Login extends javax.swing.JFrame {
 
+    private Persona persona;
+
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
-        txtUsuario.setBackground(new Color(0,0,0,0));
-        pswContrasenia.setBackground(new Color(0,0,0,0));
-        btnEntrar.setBackground(new Color(0,0,0,0));
+        txtUsuario.setBackground(new Color(0, 0, 0, 0));
+        pswContrasenia.setBackground(new Color(0, 0, 0, 0));
+        btnEntrar.setBackground(new Color(0, 0, 0, 0));
     }
 
     /**
@@ -45,6 +48,11 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 160, 40));
 
         txtUsuario.setBorder(null);
@@ -53,8 +61,6 @@ public class Login extends javax.swing.JFrame {
         pswContrasenia.setText("jPasswordField1");
         pswContrasenia.setBorder(null);
         jPanel1.add(pswContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 221, 150, 30));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon("/home/hectortllo/Descargas/LOGIN.png")); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 5, -1, 400));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 600, 410));
@@ -62,41 +68,9 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
-        });
-    }
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+        this.persona.verificarLogin();
+    }//GEN-LAST:event_btnEntrarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;
@@ -105,4 +79,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField pswContrasenia;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
 }

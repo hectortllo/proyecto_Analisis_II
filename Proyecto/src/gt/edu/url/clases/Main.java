@@ -5,12 +5,19 @@
  */
 package gt.edu.url.clases;
 
+import GUI.Login;
+
 /**
  *
  * @author Oswaldo Alvarez <mynoswaldo@gmail.com>
  */
 public class Main {    
     public static void main(String[] args) {
-        
+        Conexion conexion = Conexion.getInstancia();
+        conexion.conectar();
+        Persona persona = new Persona(conexion);
+        Login login = new Login();
+        login.setVisible(true);
+        login.setPersona(persona);
     }
 }
