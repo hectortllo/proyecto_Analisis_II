@@ -1,0 +1,4 @@
+#Excluyendo lo que ésta en la carpeta META-INF que ahí 
+#es dónde está el persistence.xml
+/ProyectoAnalisisII/src/main/resources/META-INF
+/ProyectoAnalisisII/pom.xml
