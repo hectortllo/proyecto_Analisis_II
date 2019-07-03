@@ -11,7 +11,8 @@ import gt.edu.url.formularios.Login;
  *
  * @author Oswaldo Alvarez <mynoswaldo@gmail.com>
  */
-public class Main {    
+public class Main {
+
     public static void main(String[] args) {
         Conexion conexion = Conexion.getInstancia();
         conexion.conectar();
