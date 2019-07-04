@@ -5,6 +5,10 @@
  */
 package gt.edu.url.clases;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 /**
  *
  * @author Oswaldo Alvarez <mynoswaldo@gmail.com>
@@ -12,12 +16,12 @@ package gt.edu.url.clases;
 public class Conexion {
 
     private static Conexion conexion;
-    private String nombreBD;
-    private String url;
-    private String contrasenia;
-    private String puerto;
+    private EntityManagerFactory emf;
+    private EntityManager em;
 
     public Conexion() {
+        emf = Persistence.createEntityManagerFactory("Aceitera");
+        em = emf.createEntityManager();
     }
 
     public static Conexion getInstancia() {
@@ -27,11 +31,20 @@ public class Conexion {
         return conexion;
     }
 
-    public void conectar() {
-        System.out.println("Me conecte a la BD");
+    public String conectar() {
+        if (em.isOpen()) {
+            return "Conectado";
+        } else {
+            return "Error";
+        }
     }
 
-    public void desconectar() {
-        System.out.println("Desconectado de la BD");
+    public String desconectar() {
+        this.em.close();
+        return "Desconectado";
+    }
+
+    public EntityManager getEntity() {
+        return this.em;
     }
 }
