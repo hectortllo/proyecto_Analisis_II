@@ -1,0 +1,17 @@
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/controller/ClienteJpaController.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/formularios/Login.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/clases/Main.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/controller/DetalleVentaJpaController.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/clases/Conexion.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/entity/Venta.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/controller/exceptions/NonexistentEntityException.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/entity/Cliente.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/controller/ProductoJpaController.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/entity/Producto.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/clases/Persona.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/entity/DetalleVenta.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/entity/TipoProducto.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/controller/exceptions/IllegalOrphanException.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/controller/exceptions/PreexistingEntityException.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/controller/VentaJpaController.java
+/home/oswaldo/Proyectos GIT/proyecto_Analisis_II/ProyectoAnalisisII/src/main/java/gt/edu/url/controller/TipoProductoJpaController.java
