@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gt.edu.url.formularios;
+package gt.edu.url.vista;
 
 import gt.edu.url.clases.Persona;
 import java.awt.Color;

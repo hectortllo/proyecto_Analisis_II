@@ -19,7 +19,7 @@ public class Conexion {
     private EntityManagerFactory emf;
     private EntityManager em;
 
-    public Conexion() {
+    private Conexion() {
         emf = Persistence.createEntityManagerFactory("Aceitera");
         em = emf.createEntityManager();
     }
