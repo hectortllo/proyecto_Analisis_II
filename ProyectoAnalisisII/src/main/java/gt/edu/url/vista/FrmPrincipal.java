@@ -29,10 +29,58 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlPrincipal = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        pnlMenus = new javax.swing.JPanel();
+        rsPnlPrincipal = new rojerusan.RSPanelsSlider();
+        pnlMenu1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnlPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pnlMenus.setBackground(new java.awt.Color(204, 255, 204));
+
+        javax.swing.GroupLayout pnlMenusLayout = new javax.swing.GroupLayout(pnlMenus);
+        pnlMenus.setLayout(pnlMenusLayout);
+        pnlMenusLayout.setHorizontalGroup(
+            pnlMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+        pnlMenusLayout.setVerticalGroup(
+            pnlMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 650, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(pnlMenus, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 650));
+
+        pnlMenu1.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout pnlMenu1Layout = new javax.swing.GroupLayout(pnlMenu1);
+        pnlMenu1.setLayout(pnlMenu1Layout);
+        pnlMenu1Layout.setHorizontalGroup(
+            pnlMenu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+        );
+        pnlMenu1Layout.setVerticalGroup(
+            pnlMenu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 650, Short.MAX_VALUE)
+        );
+
+        rsPnlPrincipal.add(pnlMenu1, "card2");
+
+        jPanel1.add(rsPnlPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 800, 650));
+
+        javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
+        pnlPrincipal.setLayout(pnlPrincipalLayout);
+        pnlPrincipalLayout.setHorizontalGroup(
+            pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        pnlPrincipalLayout.setVerticalGroup(
+            pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,6 +132,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel pnlMenu1;
+    private javax.swing.JPanel pnlMenus;
     private javax.swing.JPanel pnlPrincipal;
+    private rojerusan.RSPanelsSlider rsPnlPrincipal;
     // End of variables declaration//GEN-END:variables
 }

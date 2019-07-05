@@ -1,0 +1,8 @@
+Link para agregar jar a maven
+https://www.youtube.com/watch?v=Kvid8C9Htw8
+
+Link para instalar jar a netbeans:
+https://www.youtube.com/watch?v=3nGwbRONhEU
+
+Para instalar el panel slider:
+mvn install:install-file -Dfile:RSPanelSlider.jar -DgroupId=rspanelslider -DartifactId=RSPS -Dversion:1.0 -Dpackaging=jar
