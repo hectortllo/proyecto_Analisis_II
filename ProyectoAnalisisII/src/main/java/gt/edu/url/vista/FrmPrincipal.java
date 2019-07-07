@@ -63,7 +63,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlMenus.setBackground(new java.awt.Color(204, 255, 204));
         pnlMenus.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnInventario.setIcon(new javax.swing.ImageIcon("/home/hectortllo/NetBeansProjects/GitProjects/proyecto_Analisis_II/ProyectoAnalisisII/src/Imagenes/inventario.png")); // NOI18N
+        btnInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gt/edu/url/Imagenes/inventario.png"))); // NOI18N
         btnInventario.setText("\n");
         btnInventario.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Inventario</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnInventario.setBorder(null);
@@ -78,7 +78,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         pnlMenus.add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
 
-        btnVentas.setIcon(new javax.swing.ImageIcon("/home/hectortllo/NetBeansProjects/GitProjects/proyecto_Analisis_II/ProyectoAnalisisII/src/Imagenes/ventas.png")); // NOI18N
+        btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gt/edu/url/Imagenes/ventas.png"))); // NOI18N
         btnVentas.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Ventas</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnVentas.setBorder(null);
         btnVentas.setBorderPainted(false);
@@ -92,7 +92,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         pnlMenus.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, -1));
 
-        btnClientes.setIcon(new javax.swing.ImageIcon("/home/hectortllo/NetBeansProjects/GitProjects/proyecto_Analisis_II/ProyectoAnalisisII/src/Imagenes/clientes.png")); // NOI18N
         btnClientes.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Clientes</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnClientes.setBorder(null);
         btnClientes.setBorderPainted(false);
