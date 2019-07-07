@@ -45,10 +45,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblAceitera = new javax.swing.JLabel();
         pnlInventario = new javax.swing.JPanel();
         lblInventario = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblInventario = new rojerusan.RSTableMetro();
         pnlVentas = new javax.swing.JPanel();
         lblVentas = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblVentas = new rojerusan.RSTableMetro();
         pnlClientes = new javax.swing.JPanel();
         lblClientes = new javax.swing.JLabel();
+        pnlVender = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,6 +139,35 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblInventario.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         pnlInventario.add(lblInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 880, 50));
 
+        tblInventario.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblInventario);
+        if (tblInventario.getColumnModel().getColumnCount() > 0) {
+            tblInventario.getColumnModel().getColumn(0).setResizable(false);
+            tblInventario.getColumnModel().getColumn(1).setResizable(false);
+            tblInventario.getColumnModel().getColumn(2).setResizable(false);
+            tblInventario.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        pnlInventario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 790, 510));
+
         rsPnlPrincipal.add(pnlInventario, "card3");
 
         pnlVentas.setBackground(new java.awt.Color(255, 255, 204));
@@ -148,6 +182,35 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblVentas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         pnlVentas.add(lblVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, 880, 60));
 
+        tblVentas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblVentas);
+        if (tblVentas.getColumnModel().getColumnCount() > 0) {
+            tblVentas.getColumnModel().getColumn(0).setResizable(false);
+            tblVentas.getColumnModel().getColumn(1).setResizable(false);
+            tblVentas.getColumnModel().getColumn(2).setResizable(false);
+            tblVentas.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        pnlVentas.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 810, 520));
+
         rsPnlPrincipal.add(pnlVentas, "card4");
 
         pnlClientes.setBackground(new java.awt.Color(255, 255, 204));
@@ -161,6 +224,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlClientes.add(lblClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 870, 60));
 
         rsPnlPrincipal.add(pnlClientes, "card5");
+
+        pnlVender.setBackground(new java.awt.Color(255, 255, 204));
+        pnlVender.setName("pnlVender"); // NOI18N
+
+        javax.swing.GroupLayout pnlVenderLayout = new javax.swing.GroupLayout(pnlVender);
+        pnlVender.setLayout(pnlVenderLayout);
+        pnlVenderLayout.setHorizontalGroup(
+            pnlVenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 880, Short.MAX_VALUE)
+        );
+        pnlVenderLayout.setVerticalGroup(
+            pnlVenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 650, Short.MAX_VALUE)
+        );
+
+        rsPnlPrincipal.add(pnlVender, "card6");
 
         jPanel1.add(rsPnlPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 880, 650));
 
@@ -250,6 +329,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnVentas;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAceitera;
     private javax.swing.JLabel lblClientes;
     private javax.swing.JLabel lblInventario;
@@ -260,7 +341,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel pnlInventario;
     private javax.swing.JPanel pnlMenus;
     private javax.swing.JPanel pnlPrincipal;
+    private javax.swing.JPanel pnlVender;
     private javax.swing.JPanel pnlVentas;
     private rojerusan.RSPanelsSlider rsPnlPrincipal;
+    private rojerusan.RSTableMetro tblInventario;
+    private rojerusan.RSTableMetro tblVentas;
     // End of variables declaration//GEN-END:variables
 }
