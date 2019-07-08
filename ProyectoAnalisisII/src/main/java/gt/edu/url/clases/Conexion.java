@@ -31,12 +31,8 @@ public class Conexion {
         return conexion;
     }
 
-    public String conectar() {
-        if (em.isOpen()) {
-            return "Conectado";
-        } else {
-            return "Error";
-        }
+    public boolean conectado() {
+        return em.isOpen();
     }
 
     public String desconectar() {
@@ -44,7 +40,7 @@ public class Conexion {
         return "Desconectado";
     }
 
-    public EntityManager getEntity() {
+    public EntityManager getEntityManager() {
         return this.em;
     }
 }

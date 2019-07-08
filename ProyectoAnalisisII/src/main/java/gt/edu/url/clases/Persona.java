@@ -5,17 +5,32 @@
  */
 package gt.edu.url.clases;
 
+import gt.edu.url.controller.UsuarioJpaController;
+import org.apache.commons.codec.digest.DigestUtils;
+
 /**
  *
  * @author Oswaldo Alvarez <mynoswaldo@gmail.com>
  */
 public class Persona {
+
     private Conexion conexion;
+    private UsuarioJpaController usuario;
+
     public Persona(Conexion conexion) {
         this.conexion = conexion;
+        usuario = new UsuarioJpaController(conexion.getEntityManager());
     }
 
-    public void verificarLogin() {
-        System.out.println("Inicio Correctamente");
+    public boolean verificarLogin(String nombreUsuario, String contrasenia) {
+        String contraseniaBD = usuario.findContrasenia(nombreUsuario);
+        if (contraseniaBD != null) {
+            return contraseniaBD.equals(encriptar(contrasenia));
+        }
+        return false;
+    }
+
+    private String encriptar(String password) {
+        return DigestUtils.md5Hex(password);
     }
 }

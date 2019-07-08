@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -26,55 +25,48 @@ import javax.persistence.EntityManagerFactory;
  */
 public class TipoProductoJpaController implements Serializable {
 
-    public TipoProductoJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public TipoProductoJpaController(EntityManager em) {
+        this.em = em;
     }
-    private EntityManagerFactory emf = null;
+    private EntityManager em = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return em;
     }
 
     public void create(TipoProducto tipoProducto) {
-        if (tipoProducto.getProductoCollection() == null) {
-            tipoProducto.setProductoCollection(new ArrayList<Producto>());
+        if (tipoProducto.getProductos() == null) {
+            tipoProducto.setProductos(new ArrayList<Producto>());
         }
-        EntityManager em = null;
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             Collection<Producto> attachedProductoCollection = new ArrayList<Producto>();
-            for (Producto productoCollectionProductoToAttach : tipoProducto.getProductoCollection()) {
+            for (Producto productoCollectionProductoToAttach : tipoProducto.getProductos()) {
                 productoCollectionProductoToAttach = em.getReference(productoCollectionProductoToAttach.getClass(), productoCollectionProductoToAttach.getId());
                 attachedProductoCollection.add(productoCollectionProductoToAttach);
             }
-            tipoProducto.setProductoCollection(attachedProductoCollection);
+            tipoProducto.setProductos(attachedProductoCollection);
             em.persist(tipoProducto);
-            for (Producto productoCollectionProducto : tipoProducto.getProductoCollection()) {
+            for (Producto productoCollectionProducto : tipoProducto.getProductos()) {
                 TipoProducto oldTipoProductoidOfProductoCollectionProducto = productoCollectionProducto.getTipoProductoid();
                 productoCollectionProducto.setTipoProductoid(tipoProducto);
                 productoCollectionProducto = em.merge(productoCollectionProducto);
                 if (oldTipoProductoidOfProductoCollectionProducto != null) {
-                    oldTipoProductoidOfProductoCollectionProducto.getProductoCollection().remove(productoCollectionProducto);
+                    oldTipoProductoidOfProductoCollectionProducto.getProductos().remove(productoCollectionProducto);
                     oldTipoProductoidOfProductoCollectionProducto = em.merge(oldTipoProductoidOfProductoCollectionProducto);
                 }
             }
             em.getTransaction().commit();
         } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void edit(TipoProducto tipoProducto) throws IllegalOrphanException, NonexistentEntityException, Exception {
-        EntityManager em = null;
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             TipoProducto persistentTipoProducto = em.find(TipoProducto.class, tipoProducto.getId());
-            Collection<Producto> productoCollectionOld = persistentTipoProducto.getProductoCollection();
-            Collection<Producto> productoCollectionNew = tipoProducto.getProductoCollection();
+            Collection<Producto> productoCollectionOld = persistentTipoProducto.getProductos();
+            Collection<Producto> productoCollectionNew = tipoProducto.getProductos();
             List<String> illegalOrphanMessages = null;
             for (Producto productoCollectionOldProducto : productoCollectionOld) {
                 if (!productoCollectionNew.contains(productoCollectionOldProducto)) {
@@ -93,7 +85,7 @@ public class TipoProductoJpaController implements Serializable {
                 attachedProductoCollectionNew.add(productoCollectionNewProductoToAttach);
             }
             productoCollectionNew = attachedProductoCollectionNew;
-            tipoProducto.setProductoCollection(productoCollectionNew);
+            tipoProducto.setProductos(productoCollectionNew);
             tipoProducto = em.merge(tipoProducto);
             for (Producto productoCollectionNewProducto : productoCollectionNew) {
                 if (!productoCollectionOld.contains(productoCollectionNewProducto)) {
@@ -101,7 +93,7 @@ public class TipoProductoJpaController implements Serializable {
                     productoCollectionNewProducto.setTipoProductoid(tipoProducto);
                     productoCollectionNewProducto = em.merge(productoCollectionNewProducto);
                     if (oldTipoProductoidOfProductoCollectionNewProducto != null && !oldTipoProductoidOfProductoCollectionNewProducto.equals(tipoProducto)) {
-                        oldTipoProductoidOfProductoCollectionNewProducto.getProductoCollection().remove(productoCollectionNewProducto);
+                        oldTipoProductoidOfProductoCollectionNewProducto.getProductos().remove(productoCollectionNewProducto);
                         oldTipoProductoidOfProductoCollectionNewProducto = em.merge(oldTipoProductoidOfProductoCollectionNewProducto);
                     }
                 }
@@ -117,16 +109,11 @@ public class TipoProductoJpaController implements Serializable {
             }
             throw ex;
         } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
-        EntityManager em = null;
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             TipoProducto tipoProducto;
             try {
@@ -136,7 +123,7 @@ public class TipoProductoJpaController implements Serializable {
                 throw new NonexistentEntityException("The tipoProducto with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<Producto> productoCollectionOrphanCheck = tipoProducto.getProductoCollection();
+            Collection<Producto> productoCollectionOrphanCheck = tipoProducto.getProductos();
             for (Producto productoCollectionOrphanCheckProducto : productoCollectionOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
@@ -149,9 +136,6 @@ public class TipoProductoJpaController implements Serializable {
             em.remove(tipoProducto);
             em.getTransaction().commit();
         } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -164,7 +148,6 @@ public class TipoProductoJpaController implements Serializable {
     }
 
     private List<TipoProducto> findTipoProductoEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(TipoProducto.class));
@@ -175,21 +158,17 @@ public class TipoProductoJpaController implements Serializable {
             }
             return q.getResultList();
         } finally {
-            em.close();
         }
     }
 
     public TipoProducto findTipoProducto(Integer id) {
-        EntityManager em = getEntityManager();
         try {
             return em.find(TipoProducto.class, id);
         } finally {
-            em.close();
         }
     }
 
     public int getTipoProductoCount() {
-        EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             Root<TipoProducto> rt = cq.from(TipoProducto.class);
@@ -197,8 +176,15 @@ public class TipoProductoJpaController implements Serializable {
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
         } finally {
-            em.close();
         }
     }
-    
+
+    public List<Producto> mostrar(int id) {
+        try {
+            TipoProducto tipoProducto = em.find(TipoProducto.class, id);
+            List<Producto> productos = (List<Producto>) tipoProducto.getProductos();
+            return productos;
+        } finally {
+        }
+    }
 }

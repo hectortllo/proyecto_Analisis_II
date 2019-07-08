@@ -153,7 +153,8 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "gt.edu.url.entity.Producto[ id=" + id + " ]";
+        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", cantidad=" + cantidad + ", precio=" + precio + ", descripcion=" + descripcion + ", detalleVentaCollection=" + detalleVentaCollection + ", tipoProductoid=" + tipoProductoid + '}';
     }
+    
     
 }

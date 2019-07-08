@@ -24,15 +24,14 @@ import javax.persistence.Table;
  * @author Oswaldo Alvarez <mynoswaldo@gmail.com>
  */
 @Entity
-@Table(name = "Cliente")
+@Table(name = "Usuario")
 @NamedQueries({
-    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
-    @NamedQuery(name = "Cliente.findById", query = "SELECT c FROM Cliente c WHERE c.id = :id"),
-    @NamedQuery(name = "Cliente.findByNombre", query = "SELECT c FROM Cliente c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "Cliente.findByApellido", query = "SELECT c FROM Cliente c WHERE c.apellido = :apellido"),
-    @NamedQuery(name = "Cliente.findByDireccion", query = "SELECT c FROM Cliente c WHERE c.direccion = :direccion"),
-    @NamedQuery(name = "Cliente.findByNit", query = "SELECT c FROM Cliente c WHERE c.nit = :nit")})
-public class Cliente implements Serializable {
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
+    @NamedQuery(name = "Usuario.findById", query = "SELECT u FROM Usuario u WHERE u.id = :id"),
+    @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
+    @NamedQuery(name = "Usuario.findByNombreUsuario", query = "SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario"),
+    @NamedQuery(name = "Usuario.findByContrasenia", query = "SELECT u FROM Usuario u WHERE u.contrasenia = :contrasenia")})
+public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,30 +43,26 @@ public class Cliente implements Serializable {
     @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
-    @Column(name = "apellido")
-    private String apellido;
+    @Column(name = "nombre_usuario")
+    private String nombreUsuario;
     @Basic(optional = false)
-    @Column(name = "direccion")
-    private String direccion;
-    @Basic(optional = false)
-    @Column(name = "nit")
-    private String nit;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteId")
+    @Column(name = "contrasenia")
+    private String contrasenia;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioid")
     private Collection<Venta> ventaCollection;
 
-    public Cliente() {
+    public Usuario() {
     }
 
-    public Cliente(Integer id) {
+    public Usuario(Integer id) {
         this.id = id;
     }
 
-    public Cliente(Integer id, String nombre, String apellido, String direccion, String nit) {
+    public Usuario(Integer id, String nombre, String nombreUsuario, String contrasenia) {
         this.id = id;
         this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.nit = nit;
+        this.nombreUsuario = nombreUsuario;
+        this.contrasenia = contrasenia;
     }
 
     public Integer getId() {
@@ -86,28 +81,20 @@ public class Cliente implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getNit() {
-        return nit;
-    }
-
-    public void setNit(String nit) {
-        this.nit = nit;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     public Collection<Venta> getVentaCollection() {
@@ -128,10 +115,10 @@ public class Cliente implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
+        if (!(object instanceof Usuario)) {
             return false;
         }
-        Cliente other = (Cliente) object;
+        Usuario other = (Usuario) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -140,7 +127,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "gt.edu.url.entity.Cliente[ id=" + id + " ]";
+        return "gt.edu.url.entity.Usuario[ id=" + id + " ]";
     }
     
 }

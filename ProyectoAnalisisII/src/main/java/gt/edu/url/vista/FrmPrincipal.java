@@ -5,23 +5,34 @@
  */
 package gt.edu.url.vista;
 
+import gt.edu.url.clases.Conexion;
+import gt.edu.url.controller.TipoProductoJpaController;
+import gt.edu.url.entity.Producto;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 import rojerusan.RSPanelsSlider;
 
 /**
  *
  * @author Héctor Tello <hectortllo@gmail.com>
  */
-public class FrmPrincipal extends javax.swing.JFrame {
+public final class FrmPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmPrincipal
      */
-    public FrmPrincipal() {
+    private Conexion conexion;
+    private TipoProductoJpaController controllerTipoP;
+    
+    public FrmPrincipal(Conexion conexion) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.conexion = conexion;
+        controllerTipoP = new TipoProductoJpaController(this.conexion.getEntityManager());
+        getTipo();
     }
 
     /**
@@ -47,6 +58,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblInventario = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblInventario = new rojerusan.RSTableMetro();
+        btnBuscar = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        cmbCategoria = new rojerusan.RSComboMetro();
+        jLabel1 = new javax.swing.JLabel();
         pnlVentas = new javax.swing.JPanel();
         lblVentas = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -56,6 +71,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlVender = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -63,7 +83,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlMenus.setBackground(new java.awt.Color(204, 255, 204));
         pnlMenus.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnInventario.setIcon(new javax.swing.ImageIcon("/home/hectortllo/NetBeansProjects/GitProjects/proyecto_Analisis_II/ProyectoAnalisisII/src/Imagenes/inventario.png")); // NOI18N
+        btnInventario.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/inventario.png"));
         btnInventario.setText("\n");
         btnInventario.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Inventario</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnInventario.setBorder(null);
@@ -78,7 +98,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         pnlMenus.add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
 
-        btnVentas.setIcon(new javax.swing.ImageIcon("/home/hectortllo/NetBeansProjects/GitProjects/proyecto_Analisis_II/ProyectoAnalisisII/src/Imagenes/ventas.png")); // NOI18N
+        btnVentas.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/ventas.png"));
         btnVentas.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Ventas</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnVentas.setBorder(null);
         btnVentas.setBorderPainted(false);
@@ -92,7 +112,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         pnlMenus.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, -1));
 
-        btnClientes.setIcon(new javax.swing.ImageIcon("/home/hectortllo/NetBeansProjects/GitProjects/proyecto_Analisis_II/ProyectoAnalisisII/src/Imagenes/clientes.png")); // NOI18N
+        btnClientes.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/clientes.png"));
         btnClientes.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Clientes</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnClientes.setBorder(null);
         btnClientes.setBorderPainted(false);
@@ -141,17 +161,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         tblInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "Precio", "Cantidad"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -163,10 +180,28 @@ public class FrmPrincipal extends javax.swing.JFrame {
             tblInventario.getColumnModel().getColumn(0).setResizable(false);
             tblInventario.getColumnModel().getColumn(1).setResizable(false);
             tblInventario.getColumnModel().getColumn(2).setResizable(false);
-            tblInventario.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        pnlInventario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 790, 510));
+        pnlInventario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 790, 430));
+
+        btnBuscar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnBuscar.setText("Buscar");
+        pnlInventario.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 90, -1, -1));
+
+        jTextField1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        pnlInventario.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 320, -1));
+
+        cmbCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCategoriaActionPerformed(evt);
+            }
+        });
+        pnlInventario.add(cmbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 230, -1));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Categoria");
+        pnlInventario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
 
         rsPnlPrincipal.add(pnlInventario, "card3");
 
@@ -280,8 +315,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
         moverPanel(btnClientes, pnlClientes);
     }//GEN-LAST:event_btnClientesActionPerformed
 
-    private void moverPanel(JButton boton, JPanel panel){
-        if(!boton.isSelected()){
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        System.out.println(conexion.desconectar());
+    }//GEN-LAST:event_formWindowClosing
+
+    private void cmbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoriaActionPerformed
+        buscar(cmbCategoria.getSelectedIndex()+1);
+    }//GEN-LAST:event_cmbCategoriaActionPerformed
+
+    private void moverPanel(JButton boton, JPanel panel) {
+        if (!boton.isSelected()) {
             btnInventario.setSelected(false);
             btnClientes.setSelected(false);
             btnVentas.setSelected(false);
@@ -289,48 +332,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
             rsPnlPrincipal.setPanelSlider(10, panel, RSPanelsSlider.DIRECT.RIGHT);
         }
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmPrincipal().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnVentas;
+    private rojerusan.RSComboMetro cmbCategoria;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblAceitera;
     private javax.swing.JLabel lblClientes;
     private javax.swing.JLabel lblInventario;
@@ -347,4 +359,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private rojerusan.RSTableMetro tblInventario;
     private rojerusan.RSTableMetro tblVentas;
     // End of variables declaration//GEN-END:variables
+
+    private void getTipo() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addAll(controllerTipoP.findTipoProductoEntities());
+        cmbCategoria.setModel(model);
+    }
+
+    private void buscar(int index) {
+        DefaultTableModel model1 = new DefaultTableModel();
+        model1.addColumn("Nombre");
+        model1.addColumn("Precio");
+        model1.addColumn("Cantidad");
+        if (index != 0) {
+            Object[] row = new Object[3];
+            for (Producto producto : controllerTipoP.mostrar(index)) {
+                row[0] = producto.getNombre();
+                row[1] = producto.getPrecio();
+                row[2] = producto.getCantidad();
+                model1.addRow(row);
+            }
+        }
+        tblInventario.setModel(model1);
+    }
 }

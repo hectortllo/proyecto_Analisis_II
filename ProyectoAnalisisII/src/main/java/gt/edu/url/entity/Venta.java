@@ -52,6 +52,9 @@ public class Venta implements Serializable {
     private Date fecha;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaid")
     private Collection<DetalleVenta> detalleVentaCollection;
+    @JoinColumn(name = "Usuario_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Usuario usuarioid;
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Cliente clienteId;
@@ -99,6 +102,14 @@ public class Venta implements Serializable {
 
     public void setDetalleVentaCollection(Collection<DetalleVenta> detalleVentaCollection) {
         this.detalleVentaCollection = detalleVentaCollection;
+    }
+
+    public Usuario getUsuarioid() {
+        return usuarioid;
+    }
+
+    public void setUsuarioid(Usuario usuarioid) {
+        this.usuarioid = usuarioid;
     }
 
     public Cliente getClienteId() {
