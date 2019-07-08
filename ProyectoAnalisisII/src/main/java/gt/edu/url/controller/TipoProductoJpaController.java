@@ -25,13 +25,13 @@ import javax.persistence.EntityManager;
  */
 public class TipoProductoJpaController implements Serializable {
 
+    private EntityManager em = null;
     public TipoProductoJpaController(EntityManager em) {
         this.em = em;
     }
-    private EntityManager em = null;
 
     public EntityManager getEntityManager() {
-        return em;
+        return this.em;
     }
 
     public void create(TipoProducto tipoProducto) {

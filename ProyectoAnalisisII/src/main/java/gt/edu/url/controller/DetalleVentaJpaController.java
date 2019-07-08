@@ -16,7 +16,6 @@ import gt.edu.url.entity.Producto;
 import gt.edu.url.entity.Venta;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -24,13 +23,13 @@ import javax.persistence.EntityManagerFactory;
  */
 public class DetalleVentaJpaController implements Serializable {
 
-    public DetalleVentaJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    private EntityManager em = null;
+    public DetalleVentaJpaController(EntityManager em) {
+        this.em = em;
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return this.em;
     }
 
     public void create(DetalleVenta detalleVenta) {
@@ -58,11 +57,7 @@ public class DetalleVentaJpaController implements Serializable {
                 ventaid = em.merge(ventaid);
             }
             em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
+        } finally {}
     }
 
     public void edit(DetalleVenta detalleVenta) throws NonexistentEntityException, Exception {
@@ -110,11 +105,7 @@ public class DetalleVentaJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
+        } finally {}
     }
 
     public void destroy(Integer id) throws NonexistentEntityException {
@@ -141,11 +132,7 @@ public class DetalleVentaJpaController implements Serializable {
             }
             em.remove(detalleVenta);
             em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
+        } finally {}
     }
 
     public List<DetalleVenta> findDetalleVentaEntities() {
@@ -176,9 +163,7 @@ public class DetalleVentaJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             return em.find(DetalleVenta.class, id);
-        } finally {
-            em.close();
-        }
+        } finally {}
     }
 
     public int getDetalleVentaCount() {
@@ -189,9 +174,7 @@ public class DetalleVentaJpaController implements Serializable {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
+        } finally {}
     }
     
 }
