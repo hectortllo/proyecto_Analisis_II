@@ -5,6 +5,8 @@
  */
 package gt.edu.url.clases;
 
+import gt.edu.url.vista.Login;
+
 /**
  *
  * @author Oswaldo Alvarez <mynoswaldo@gmail.com>
@@ -15,5 +17,7 @@ public class Main {
         Conexion conexion = Conexion.getInstancia();
         System.out.println(conexion.conectar());
         System.out.println(conexion.desconectar());
+        Login login = new Login();
+        login.setVisible(true);
     }
 }

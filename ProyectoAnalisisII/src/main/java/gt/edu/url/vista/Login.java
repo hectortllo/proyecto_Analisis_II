@@ -20,7 +20,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
-        lblImagen.setIcon(new ImageIcon("src/Imagenes/LOGIN.png"));
+        lblImagen.setIcon(new ImageIcon("src/main/java/gt/edu/url/Imagenes/LOGIN.png"));
         txtUsuario.setBackground(new Color(0,0,0,0));
         PswContrasenia.setBackground(new Color(0,0,0,0));
         btnEntrar.setBackground(new Color(0,0,0,0));
@@ -61,6 +61,8 @@ public class Login extends javax.swing.JFrame {
 
         txtUsuario.setBorder(null);
         getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 133, 170, 30));
+
+        lblImagen.setIcon(new javax.swing.ImageIcon("src/gt/edu/url/Imagenes/LOGIN.png"));
         getContentPane().add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 400));
 
         pack();

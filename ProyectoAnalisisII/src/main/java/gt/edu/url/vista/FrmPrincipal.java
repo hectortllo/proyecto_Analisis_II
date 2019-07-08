@@ -63,7 +63,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlMenus.setBackground(new java.awt.Color(204, 255, 204));
         pnlMenus.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gt/edu/url/Imagenes/inventario.png"))); // NOI18N
+        btnInventario.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/inventario.png"));
         btnInventario.setText("\n");
         btnInventario.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Inventario</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnInventario.setBorder(null);
@@ -78,7 +78,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         pnlMenus.add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
 
-        btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gt/edu/url/Imagenes/ventas.png"))); // NOI18N
+        btnVentas.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/ventas.png"));
         btnVentas.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Ventas</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnVentas.setBorder(null);
         btnVentas.setBorderPainted(false);
@@ -92,6 +92,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         pnlMenus.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, -1));
 
+        btnClientes.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/clientes.png"));
         btnClientes.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Clientes</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnClientes.setBorder(null);
         btnClientes.setBorderPainted(false);
@@ -279,8 +280,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         moverPanel(btnClientes, pnlClientes);
     }//GEN-LAST:event_btnClientesActionPerformed
 
-    private void moverPanel(JButton boton, JPanel panel){
-        if(!boton.isSelected()){
+    private void moverPanel(JButton boton, JPanel panel) {
+        if (!boton.isSelected()) {
             btnInventario.setSelected(false);
             btnClientes.setSelected(false);
             btnVentas.setSelected(false);
@@ -288,39 +289,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
             rsPnlPrincipal.setPanelSlider(10, panel, RSPanelsSlider.DIRECT.RIGHT);
         }
     }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmPrincipal().setVisible(true);
-            }
-        });
+        new FrmPrincipal().setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

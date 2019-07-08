@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import gt.edu.url.entity.Usuario;
 import gt.edu.url.entity.Cliente;
 import gt.edu.url.entity.DetalleVenta;
 import gt.edu.url.entity.Venta;
@@ -44,6 +45,11 @@ public class VentaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Usuario usuarioid = venta.getUsuarioid();
+            if (usuarioid != null) {
+                usuarioid = em.getReference(usuarioid.getClass(), usuarioid.getId());
+                venta.setUsuarioid(usuarioid);
+            }
             Cliente clienteId = venta.getClienteId();
             if (clienteId != null) {
                 clienteId = em.getReference(clienteId.getClass(), clienteId.getId());
@@ -56,6 +62,10 @@ public class VentaJpaController implements Serializable {
             }
             venta.setDetalleVentaCollection(attachedDetalleVentaCollection);
             em.persist(venta);
+            if (usuarioid != null) {
+                usuarioid.getVentaCollection().add(venta);
+                usuarioid = em.merge(usuarioid);
+            }
             if (clienteId != null) {
                 clienteId.getVentaCollection().add(venta);
                 clienteId = em.merge(clienteId);
@@ -83,6 +93,8 @@ public class VentaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Venta persistentVenta = em.find(Venta.class, venta.getId());
+            Usuario usuarioidOld = persistentVenta.getUsuarioid();
+            Usuario usuarioidNew = venta.getUsuarioid();
             Cliente clienteIdOld = persistentVenta.getClienteId();
             Cliente clienteIdNew = venta.getClienteId();
             Collection<DetalleVenta> detalleVentaCollectionOld = persistentVenta.getDetalleVentaCollection();
@@ -99,6 +111,10 @@ public class VentaJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            if (usuarioidNew != null) {
+                usuarioidNew = em.getReference(usuarioidNew.getClass(), usuarioidNew.getId());
+                venta.setUsuarioid(usuarioidNew);
+            }
             if (clienteIdNew != null) {
                 clienteIdNew = em.getReference(clienteIdNew.getClass(), clienteIdNew.getId());
                 venta.setClienteId(clienteIdNew);
@@ -111,6 +127,14 @@ public class VentaJpaController implements Serializable {
             detalleVentaCollectionNew = attachedDetalleVentaCollectionNew;
             venta.setDetalleVentaCollection(detalleVentaCollectionNew);
             venta = em.merge(venta);
+            if (usuarioidOld != null && !usuarioidOld.equals(usuarioidNew)) {
+                usuarioidOld.getVentaCollection().remove(venta);
+                usuarioidOld = em.merge(usuarioidOld);
+            }
+            if (usuarioidNew != null && !usuarioidNew.equals(usuarioidOld)) {
+                usuarioidNew.getVentaCollection().add(venta);
+                usuarioidNew = em.merge(usuarioidNew);
+            }
             if (clienteIdOld != null && !clienteIdOld.equals(clienteIdNew)) {
                 clienteIdOld.getVentaCollection().remove(venta);
                 clienteIdOld = em.merge(clienteIdOld);
@@ -169,6 +193,11 @@ public class VentaJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            Usuario usuarioid = venta.getUsuarioid();
+            if (usuarioid != null) {
+                usuarioid.getVentaCollection().remove(venta);
+                usuarioid = em.merge(usuarioid);
             }
             Cliente clienteId = venta.getClienteId();
             if (clienteId != null) {
