@@ -5,6 +5,7 @@
  */
 package gt.edu.url.vista;
 
+import gt.edu.url.clases.Conexion;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import rojerusan.RSPanelsSlider;
@@ -18,10 +19,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form FrmPrincipal
      */
+    private Conexion conexion;
+
     public FrmPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+    }
+
+    public void setConexion(Conexion conexion) {
+        this.conexion = conexion;
     }
 
     /**

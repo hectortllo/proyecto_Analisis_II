@@ -5,6 +5,7 @@
  */
 package gt.edu.url.vista;
 
+import gt.edu.url.clases.Conexion;
 import gt.edu.url.clases.Persona;
 import java.awt.Color;
 import javax.swing.ImageIcon;
@@ -16,19 +17,27 @@ import javax.swing.ImageIcon;
 public class Login extends javax.swing.JFrame {
 
     private Persona persona;
-    
+    private FrmPrincipal frmPrincipal;
+    private Conexion conexion;
+
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
         lblImagen.setIcon(new ImageIcon("src/main/java/gt/edu/url/Imagenes/LOGIN.png"));
-        txtUsuario.setBackground(new Color(0,0,0,0));
-        PswContrasenia.setBackground(new Color(0,0,0,0));
-        btnEntrar.setBackground(new Color(0,0,0,0));
+        txtUsuario.setBackground(new Color(0, 0, 0, 0));
+        PswContrasenia.setBackground(new Color(0, 0, 0, 0));
+        btnEntrar.setBackground(new Color(0, 0, 0, 0));
     }
 
-    public void setPersona(Persona persona) {
-        this.persona = persona;
+    public void setConexion(Conexion conexion) {
+        this.conexion = conexion;
+        persona = new Persona(this.conexion);
     }
+
+    public void setFrmPrincipal(FrmPrincipal frmPrincipal) {
+        this.frmPrincipal = frmPrincipal;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,6 +53,11 @@ public class Login extends javax.swing.JFrame {
         lblImagen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnEntrar.setBorder(null);
@@ -69,8 +83,17 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        this.persona.verificarLogin();
+        if (this.persona.verificarLogin(txtUsuario.getText(), PswContrasenia.getText())) {
+            frmPrincipal.setVisible(true);
+            this.dispose();
+        } else {
+            System.out.println("Error usuario/contrasenia incorrecta");
+        }
     }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        System.out.println(conexion.desconectar());
+    }//GEN-LAST:event_formWindowClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

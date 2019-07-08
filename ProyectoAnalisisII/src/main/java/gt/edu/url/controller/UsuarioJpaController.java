@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -26,22 +26,20 @@ import javax.persistence.EntityManagerFactory;
  */
 public class UsuarioJpaController implements Serializable {
 
-    public UsuarioJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public UsuarioJpaController(EntityManager em) {
+        this.em = em;
     }
-    private EntityManagerFactory emf = null;
+    private EntityManager em = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return em;
     }
 
     public void create(Usuario usuario) {
         if (usuario.getVentaCollection() == null) {
             usuario.setVentaCollection(new ArrayList<Venta>());
         }
-        EntityManager em = null;
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             Collection<Venta> attachedVentaCollection = new ArrayList<Venta>();
             for (Venta ventaCollectionVentaToAttach : usuario.getVentaCollection()) {
@@ -61,16 +59,11 @@ public class UsuarioJpaController implements Serializable {
             }
             em.getTransaction().commit();
         } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void edit(Usuario usuario) throws IllegalOrphanException, NonexistentEntityException, Exception {
-        EntityManager em = null;
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             Usuario persistentUsuario = em.find(Usuario.class, usuario.getId());
             Collection<Venta> ventaCollectionOld = persistentUsuario.getVentaCollection();
@@ -117,16 +110,11 @@ public class UsuarioJpaController implements Serializable {
             }
             throw ex;
         } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
-        EntityManager em = null;
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             Usuario usuario;
             try {
@@ -149,9 +137,6 @@ public class UsuarioJpaController implements Serializable {
             em.remove(usuario);
             em.getTransaction().commit();
         } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -164,7 +149,6 @@ public class UsuarioJpaController implements Serializable {
     }
 
     private List<Usuario> findUsuarioEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(Usuario.class));
@@ -175,21 +159,17 @@ public class UsuarioJpaController implements Serializable {
             }
             return q.getResultList();
         } finally {
-            em.close();
         }
     }
 
     public Usuario findUsuario(Integer id) {
-        EntityManager em = getEntityManager();
         try {
             return em.find(Usuario.class, id);
         } finally {
-            em.close();
         }
     }
 
     public int getUsuarioCount() {
-        EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             Root<Usuario> rt = cq.from(Usuario.class);
@@ -197,8 +177,15 @@ public class UsuarioJpaController implements Serializable {
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
         } finally {
-            em.close();
         }
     }
-    
+
+    public String findContrasenia(String nombreUsuario) {
+        try {
+            Usuario usuario = (Usuario) em.createNamedQuery("Usuario.findByNombreUsuario").setParameter("nombreUsuario", nombreUsuario).getSingleResult();
+            return usuario.getContrasenia();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

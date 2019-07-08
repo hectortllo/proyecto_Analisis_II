@@ -5,6 +5,7 @@
  */
 package gt.edu.url.clases;
 
+import gt.edu.url.vista.FrmPrincipal;
 import gt.edu.url.vista.Login;
 
 /**
@@ -15,9 +16,15 @@ public class Main {
 
     public static void main(String[] args) {
         Conexion conexion = Conexion.getInstancia();
-        System.out.println(conexion.conectar());
-        System.out.println(conexion.desconectar());
-        Login login = new Login();
-        login.setVisible(true);
+        try {
+            FrmPrincipal frmPrincipal = new FrmPrincipal();
+            Login login = new Login();
+            login.setVisible(true);
+            login.setConexion(conexion);
+            login.setFrmPrincipal(frmPrincipal);
+        } catch (Exception e) {
+            System.out.println(conexion.desconectar());
+        }
+
     }
 }
