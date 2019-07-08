@@ -33,7 +33,6 @@ public class DetalleVentaJpaController implements Serializable {
     }
 
     public void create(DetalleVenta detalleVenta) {
-        EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -61,7 +60,6 @@ public class DetalleVentaJpaController implements Serializable {
     }
 
     public void edit(DetalleVenta detalleVenta) throws NonexistentEntityException, Exception {
-        EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -109,7 +107,6 @@ public class DetalleVentaJpaController implements Serializable {
     }
 
     public void destroy(Integer id) throws NonexistentEntityException {
-        EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();

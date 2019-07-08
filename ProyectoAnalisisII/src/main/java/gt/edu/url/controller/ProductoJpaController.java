@@ -39,7 +39,6 @@ public class ProductoJpaController implements Serializable {
         if (producto.getDetalleVentaCollection() == null) {
             producto.setDetalleVentaCollection(new ArrayList<DetalleVenta>());
         }
-        EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -75,7 +74,6 @@ public class ProductoJpaController implements Serializable {
     }
 
     public void edit(Producto producto) throws IllegalOrphanException, NonexistentEntityException, Exception {
-        EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -141,7 +139,6 @@ public class ProductoJpaController implements Serializable {
     }
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
-        EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
