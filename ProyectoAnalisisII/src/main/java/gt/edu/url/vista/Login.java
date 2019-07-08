@@ -20,17 +20,18 @@ public class Login extends javax.swing.JFrame {
     private FrmPrincipal frmPrincipal;
     private Conexion conexion;
 
-    public Login() {
+    public Login(Conexion conexion) {
         initComponents();
+        this.conexion = conexion;
+        configuracion();
+    }
+
+    private void configuracion() {
         this.setLocationRelativeTo(null);
         lblImagen.setIcon(new ImageIcon("src/main/java/gt/edu/url/Imagenes/LOGIN.png"));
         txtUsuario.setBackground(new Color(0, 0, 0, 0));
         PswContrasenia.setBackground(new Color(0, 0, 0, 0));
         btnEntrar.setBackground(new Color(0, 0, 0, 0));
-    }
-
-    public void setConexion(Conexion conexion) {
-        this.conexion = conexion;
         persona = new Persona(this.conexion);
     }
 

@@ -6,6 +6,8 @@
 package gt.edu.url.vista;
 
 import gt.edu.url.clases.Conexion;
+import gt.edu.url.controller.TipoProductoJpaController;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import rojerusan.RSPanelsSlider;
@@ -14,21 +16,21 @@ import rojerusan.RSPanelsSlider;
  *
  * @author Héctor Tello <hectortllo@gmail.com>
  */
-public class FrmPrincipal extends javax.swing.JFrame {
+public final class FrmPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmPrincipal
      */
     private Conexion conexion;
+    private TipoProductoJpaController controllerTipoP;
 
-    public FrmPrincipal() {
+    public FrmPrincipal(Conexion conexion) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-    }
-
-    public void setConexion(Conexion conexion) {
         this.conexion = conexion;
+        controllerTipoP = new TipoProductoJpaController(this.conexion.getEntityManager());
+        getTipo();
     }
 
     /**
@@ -54,6 +56,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblInventario = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblInventario = new rojerusan.RSTableMetro();
+        btnBuscar = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        cmbCategoria = new rojerusan.RSComboMetro();
+        jLabel1 = new javax.swing.JLabel();
         pnlVentas = new javax.swing.JPanel();
         lblVentas = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -63,6 +69,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlVender = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -148,17 +159,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         tblInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "Precio", "Cantidad"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -170,10 +178,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
             tblInventario.getColumnModel().getColumn(0).setResizable(false);
             tblInventario.getColumnModel().getColumn(1).setResizable(false);
             tblInventario.getColumnModel().getColumn(2).setResizable(false);
-            tblInventario.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        pnlInventario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 790, 510));
+        pnlInventario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 790, 430));
+
+        btnBuscar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnBuscar.setText("Buscar");
+        pnlInventario.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 90, -1, -1));
+
+        jTextField1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        pnlInventario.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 320, -1));
+        pnlInventario.add(cmbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 230, -1));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Categoria");
+        pnlInventario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
 
         rsPnlPrincipal.add(pnlInventario, "card3");
 
@@ -287,6 +307,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         moverPanel(btnClientes, pnlClientes);
     }//GEN-LAST:event_btnClientesActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        System.out.println(conexion.desconectar());
+    }//GEN-LAST:event_formWindowClosing
+    
     private void moverPanel(JButton boton, JPanel panel) {
         if (!boton.isSelected()) {
             btnInventario.setSelected(false);
@@ -296,21 +320,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
             rsPnlPrincipal.setPanelSlider(10, panel, RSPanelsSlider.DIRECT.RIGHT);
         }
     }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        new FrmPrincipal().setVisible(true);
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnVentas;
+    private rojerusan.RSComboMetro cmbCategoria;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblAceitera;
     private javax.swing.JLabel lblClientes;
     private javax.swing.JLabel lblInventario;
@@ -327,4 +347,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private rojerusan.RSTableMetro tblInventario;
     private rojerusan.RSTableMetro tblVentas;
     // End of variables declaration//GEN-END:variables
+
+    private void getTipo() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addAll(controllerTipoP.findTipoProductoEntities());
+        cmbCategoria.setModel(model);
+    }
 }

@@ -24,9 +24,7 @@ public class Persona {
 
     public boolean verificarLogin(String nombreUsuario, String contrasenia) {
         String contraseniaBD = usuario.findContrasenia(nombreUsuario);
-        System.out.println(contraseniaBD + " " + encriptar(contrasenia));
         if (contraseniaBD != null) {
-
             return contraseniaBD.equals(encriptar(contrasenia));
         }
         return false;

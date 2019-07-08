@@ -40,7 +40,7 @@ public class TipoProducto implements Serializable {
     @Column(name = "tipo")
     private String tipo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoProductoid")
-    private Collection<Producto> productoCollection;
+    private Collection<Producto> productos;
 
     public TipoProducto() {
     }
@@ -65,12 +65,12 @@ public class TipoProducto implements Serializable {
         this.tipo = tipo;
     }
 
-    public Collection<Producto> getProductoCollection() {
-        return productoCollection;
+    public Collection<Producto> getProductos() {
+        return productos;
     }
 
-    public void setProductoCollection(Collection<Producto> productoCollection) {
-        this.productoCollection = productoCollection;
+    public void setProductos(Collection<Producto> productoCollection) {
+        this.productos = productoCollection;
     }
 
     @Override
@@ -95,7 +95,6 @@ public class TipoProducto implements Serializable {
 
     @Override
     public String toString() {
-        return "gt.edu.url.entity.TipoProducto[ id=" + id + " ]";
+        return "" + tipo;
     }
-    
 }

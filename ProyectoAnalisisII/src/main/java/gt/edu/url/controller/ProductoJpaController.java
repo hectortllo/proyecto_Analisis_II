@@ -57,7 +57,7 @@ public class ProductoJpaController implements Serializable {
             producto.setDetalleVentaCollection(attachedDetalleVentaCollection);
             em.persist(producto);
             if (tipoProductoid != null) {
-                tipoProductoid.getProductoCollection().add(producto);
+                tipoProductoid.getProductos().add(producto);
                 tipoProductoid = em.merge(tipoProductoid);
             }
             for (DetalleVenta detalleVentaCollectionDetalleVenta : producto.getDetalleVentaCollection()) {
@@ -112,11 +112,11 @@ public class ProductoJpaController implements Serializable {
             producto.setDetalleVentaCollection(detalleVentaCollectionNew);
             producto = em.merge(producto);
             if (tipoProductoidOld != null && !tipoProductoidOld.equals(tipoProductoidNew)) {
-                tipoProductoidOld.getProductoCollection().remove(producto);
+                tipoProductoidOld.getProductos().remove(producto);
                 tipoProductoidOld = em.merge(tipoProductoidOld);
             }
             if (tipoProductoidNew != null && !tipoProductoidNew.equals(tipoProductoidOld)) {
-                tipoProductoidNew.getProductoCollection().add(producto);
+                tipoProductoidNew.getProductos().add(producto);
                 tipoProductoidNew = em.merge(tipoProductoidNew);
             }
             for (DetalleVenta detalleVentaCollectionNewDetalleVenta : detalleVentaCollectionNew) {
@@ -172,7 +172,7 @@ public class ProductoJpaController implements Serializable {
             }
             TipoProducto tipoProductoid = producto.getTipoProductoid();
             if (tipoProductoid != null) {
-                tipoProductoid.getProductoCollection().remove(producto);
+                tipoProductoid.getProductos().remove(producto);
                 tipoProductoid = em.merge(tipoProductoid);
             }
             em.remove(producto);
