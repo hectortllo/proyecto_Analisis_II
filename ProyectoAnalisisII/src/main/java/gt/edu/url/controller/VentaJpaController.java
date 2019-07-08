@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -28,13 +27,13 @@ import javax.persistence.EntityManagerFactory;
  */
 public class VentaJpaController implements Serializable {
 
-    public VentaJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    private EntityManager em = null;
+    public VentaJpaController(EntityManager em) {
+        this.em = em;
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return this.em;
     }
 
     public void create(Venta venta) {
@@ -80,11 +79,7 @@ public class VentaJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
+        } finally {}
     }
 
     public void edit(Venta venta) throws IllegalOrphanException, NonexistentEntityException, Exception {
@@ -164,11 +159,7 @@ public class VentaJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
+        } finally {}
     }
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
@@ -206,11 +197,7 @@ public class VentaJpaController implements Serializable {
             }
             em.remove(venta);
             em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
+        } finally {}
     }
 
     public List<Venta> findVentaEntities() {
@@ -232,9 +219,7 @@ public class VentaJpaController implements Serializable {
                 q.setFirstResult(firstResult);
             }
             return q.getResultList();
-        } finally {
-            em.close();
-        }
+        } finally {}
     }
 
     public Venta findVenta(Integer id) {
@@ -254,9 +239,7 @@ public class VentaJpaController implements Serializable {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
+        } finally {}
     }
     
 }

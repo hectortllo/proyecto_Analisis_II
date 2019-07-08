@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -26,13 +25,13 @@ import javax.persistence.EntityManagerFactory;
  */
 public class ClienteJpaController implements Serializable {
 
-    public ClienteJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    private EntityManager em = null;
+    public ClienteJpaController(EntityManager em) {
+        this.em = em;
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return this.em;
     }
 
     public void create(Cliente cliente) {
@@ -61,9 +60,7 @@ public class ClienteJpaController implements Serializable {
             }
             em.getTransaction().commit();
         } finally {
-            if (em != null) {
-                em.close();
-            }
+            
         }
     }
 
@@ -117,9 +114,6 @@ public class ClienteJpaController implements Serializable {
             }
             throw ex;
         } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -149,9 +143,6 @@ public class ClienteJpaController implements Serializable {
             em.remove(cliente);
             em.getTransaction().commit();
         } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -197,7 +188,6 @@ public class ClienteJpaController implements Serializable {
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
         } finally {
-            em.close();
         }
     }
     

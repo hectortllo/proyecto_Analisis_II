@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -27,13 +26,13 @@ import javax.persistence.EntityManagerFactory;
  */
 public class ProductoJpaController implements Serializable {
 
-    public ProductoJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    private EntityManager em = null;
+    public ProductoJpaController(EntityManager em) {
+        this.em = em;
     }
-    private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return this.em;
     }
 
     public void create(Producto producto) {
@@ -71,9 +70,7 @@ public class ProductoJpaController implements Serializable {
             }
             em.getTransaction().commit();
         } finally {
-            if (em != null) {
-                em.close();
-            }
+            if (em != null) {}
         }
     }
 
@@ -140,11 +137,7 @@ public class ProductoJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
+        } finally {}
     }
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
@@ -177,11 +170,7 @@ public class ProductoJpaController implements Serializable {
             }
             em.remove(producto);
             em.getTransaction().commit();
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
+        } finally {}
     }
 
     public List<Producto> findProductoEntities() {
@@ -203,18 +192,14 @@ public class ProductoJpaController implements Serializable {
                 q.setFirstResult(firstResult);
             }
             return q.getResultList();
-        } finally {
-            em.close();
-        }
+        } finally {}
     }
 
     public Producto findProducto(Integer id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Producto.class, id);
-        } finally {
-            em.close();
-        }
+        } finally {}
     }
 
     public int getProductoCount() {
@@ -225,9 +210,7 @@ public class ProductoJpaController implements Serializable {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
+        } finally {}
     }
     
 }
