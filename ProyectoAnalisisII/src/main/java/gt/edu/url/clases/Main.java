@@ -18,15 +18,15 @@ public class Main {
     public static void main(String[] args) {
         Conexion conexion = Conexion.getInstancia();
         try {
-//            FrmPrincipal frmPrincipal = new FrmPrincipal(conexion);
-//            Login login = new Login(conexion);
-//            login.setVisible(true);
-//            login.setFrmPrincipal(frmPrincipal);
-            TipoProductoJpaController controller = new TipoProductoJpaController(conexion.getEntityManager());
-            System.out.println(controller.findTipoProducto(1));
-            for (gt.edu.url.entity.Producto producto : controller.mostrar(1)) {
-                System.out.println(producto.getNombre());
-            }
+            FrmPrincipal frmPrincipal = new FrmPrincipal(conexion);
+            Login login = new Login(conexion);
+            login.setVisible(true);
+            login.setFrmPrincipal(frmPrincipal);
+//            TipoProductoJpaController controller = new TipoProductoJpaController(conexion.getEntityManager());
+//            System.out.println(controller.findTipoProducto(1));
+//            for (gt.edu.url.entity.Producto producto : controller.mostrar(1)) {
+//                System.out.println(producto.getNombre());
+//            }
         } catch (Exception e) {
             System.out.println(conexion.desconectar());
         }

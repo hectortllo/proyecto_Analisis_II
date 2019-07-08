@@ -7,9 +7,11 @@ package gt.edu.url.vista;
 
 import gt.edu.url.clases.Conexion;
 import gt.edu.url.controller.TipoProductoJpaController;
+import gt.edu.url.entity.Producto;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 import rojerusan.RSPanelsSlider;
 
 /**
@@ -23,7 +25,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
      */
     private Conexion conexion;
     private TipoProductoJpaController controllerTipoP;
-
+    
     public FrmPrincipal(Conexion conexion) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -159,7 +161,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
         tblInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+
             },
             new String [] {
                 "Nombre", "Precio", "Cantidad"
@@ -188,6 +190,12 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
         jTextField1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         pnlInventario.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 320, -1));
+
+        cmbCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCategoriaActionPerformed(evt);
+            }
+        });
         pnlInventario.add(cmbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 230, -1));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -310,7 +318,11 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         System.out.println(conexion.desconectar());
     }//GEN-LAST:event_formWindowClosing
-    
+
+    private void cmbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoriaActionPerformed
+        buscar(cmbCategoria.getSelectedIndex()+1);
+    }//GEN-LAST:event_cmbCategoriaActionPerformed
+
     private void moverPanel(JButton boton, JPanel panel) {
         if (!boton.isSelected()) {
             btnInventario.setSelected(false);
@@ -352,5 +364,22 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addAll(controllerTipoP.findTipoProductoEntities());
         cmbCategoria.setModel(model);
+    }
+
+    private void buscar(int index) {
+        DefaultTableModel model1 = new DefaultTableModel();
+        model1.addColumn("Nombre");
+        model1.addColumn("Precio");
+        model1.addColumn("Cantidad");
+        if (index != 0) {
+            Object[] row = new Object[3];
+            for (Producto producto : controllerTipoP.mostrar(index)) {
+                row[0] = producto.getNombre();
+                row[1] = producto.getPrecio();
+                row[2] = producto.getCantidad();
+                model1.addRow(row);
+            }
+        }
+        tblInventario.setModel(model1);
     }
 }
