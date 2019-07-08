@@ -40,7 +40,6 @@ public class ProductoJpaController implements Serializable {
             producto.setDetalleVentaCollection(new ArrayList<DetalleVenta>());
         }
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             TipoProducto tipoProductoid = producto.getTipoProductoid();
             if (tipoProductoid != null) {
@@ -75,7 +74,6 @@ public class ProductoJpaController implements Serializable {
 
     public void edit(Producto producto) throws IllegalOrphanException, NonexistentEntityException, Exception {
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             Producto persistentProducto = em.find(Producto.class, producto.getId());
             TipoProducto tipoProductoidOld = persistentProducto.getTipoProductoid();
@@ -140,7 +138,6 @@ public class ProductoJpaController implements Serializable {
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             Producto producto;
             try {
@@ -179,7 +176,6 @@ public class ProductoJpaController implements Serializable {
     }
 
     private List<Producto> findProductoEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(Producto.class));
@@ -193,14 +189,12 @@ public class ProductoJpaController implements Serializable {
     }
 
     public Producto findProducto(Integer id) {
-        EntityManager em = getEntityManager();
         try {
             return em.find(Producto.class, id);
         } finally {}
     }
 
     public int getProductoCount() {
-        EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             Root<Producto> rt = cq.from(Producto.class);

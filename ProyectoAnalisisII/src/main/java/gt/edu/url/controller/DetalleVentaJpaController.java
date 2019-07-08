@@ -34,7 +34,6 @@ public class DetalleVentaJpaController implements Serializable {
 
     public void create(DetalleVenta detalleVenta) {
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             Producto productoid = detalleVenta.getProductoid();
             if (productoid != null) {
@@ -61,7 +60,6 @@ public class DetalleVentaJpaController implements Serializable {
 
     public void edit(DetalleVenta detalleVenta) throws NonexistentEntityException, Exception {
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             DetalleVenta persistentDetalleVenta = em.find(DetalleVenta.class, detalleVenta.getId());
             Producto productoidOld = persistentDetalleVenta.getProductoid();
@@ -108,7 +106,6 @@ public class DetalleVentaJpaController implements Serializable {
 
     public void destroy(Integer id) throws NonexistentEntityException {
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             DetalleVenta detalleVenta;
             try {
@@ -141,7 +138,6 @@ public class DetalleVentaJpaController implements Serializable {
     }
 
     private List<DetalleVenta> findDetalleVentaEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(DetalleVenta.class));
@@ -152,19 +148,16 @@ public class DetalleVentaJpaController implements Serializable {
             }
             return q.getResultList();
         } finally {
-            em.close();
         }
     }
 
     public DetalleVenta findDetalleVenta(Integer id) {
-        EntityManager em = getEntityManager();
         try {
             return em.find(DetalleVenta.class, id);
         } finally {}
     }
 
     public int getDetalleVentaCount() {
-        EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             Root<DetalleVenta> rt = cq.from(DetalleVenta.class);

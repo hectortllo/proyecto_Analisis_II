@@ -41,7 +41,6 @@ public class VentaJpaController implements Serializable {
             venta.setDetalleVentaCollection(new ArrayList<DetalleVenta>());
         }
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             Usuario usuarioid = venta.getUsuarioid();
             if (usuarioid != null) {
@@ -83,7 +82,6 @@ public class VentaJpaController implements Serializable {
 
     public void edit(Venta venta) throws IllegalOrphanException, NonexistentEntityException, Exception {
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             Venta persistentVenta = em.find(Venta.class, venta.getId());
             Usuario usuarioidOld = persistentVenta.getUsuarioid();
@@ -162,7 +160,6 @@ public class VentaJpaController implements Serializable {
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             Venta venta;
             try {
@@ -206,7 +203,6 @@ public class VentaJpaController implements Serializable {
     }
 
     private List<Venta> findVentaEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(Venta.class));
@@ -220,16 +216,13 @@ public class VentaJpaController implements Serializable {
     }
 
     public Venta findVenta(Integer id) {
-        EntityManager em = getEntityManager();
         try {
             return em.find(Venta.class, id);
         } finally {
-            em.close();
         }
     }
 
     public int getVentaCount() {
-        EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             Root<Venta> rt = cq.from(Venta.class);

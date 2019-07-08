@@ -39,7 +39,6 @@ public class ClienteJpaController implements Serializable {
             cliente.setVentaCollection(new ArrayList<Venta>());
         }
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             Collection<Venta> attachedVentaCollection = new ArrayList<Venta>();
             for (Venta ventaCollectionVentaToAttach : cliente.getVentaCollection()) {
@@ -65,7 +64,6 @@ public class ClienteJpaController implements Serializable {
 
     public void edit(Cliente cliente) throws IllegalOrphanException, NonexistentEntityException, Exception {
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             Cliente persistentCliente = em.find(Cliente.class, cliente.getId());
             Collection<Venta> ventaCollectionOld = persistentCliente.getVentaCollection();
@@ -117,7 +115,6 @@ public class ClienteJpaController implements Serializable {
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         try {
-            em = getEntityManager();
             em.getTransaction().begin();
             Cliente cliente;
             try {
@@ -152,7 +149,6 @@ public class ClienteJpaController implements Serializable {
     }
 
     private List<Cliente> findClienteEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(Cliente.class));
@@ -163,21 +159,17 @@ public class ClienteJpaController implements Serializable {
             }
             return q.getResultList();
         } finally {
-            em.close();
         }
     }
 
     public Cliente findCliente(Integer id) {
-        EntityManager em = getEntityManager();
         try {
             return em.find(Cliente.class, id);
         } finally {
-            em.close();
         }
     }
 
     public int getClienteCount() {
-        EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             Root<Cliente> rt = cq.from(Cliente.class);
