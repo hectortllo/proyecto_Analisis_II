@@ -69,6 +69,24 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         pnlClientes = new javax.swing.JPanel();
         lblClientes = new javax.swing.JLabel();
         pnlVender = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblVender = new rojerusan.RSTableMetro();
+        lblNombre = new javax.swing.JLabel();
+        lblDireccion = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
+        lblNit = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
+        txtNit = new javax.swing.JTextField();
+        btnValidar = new javax.swing.JButton();
+        lbltotales = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
+        lblMonto = new javax.swing.JLabel();
+        txtMonto = new javax.swing.JTextField();
+        lblvueltos = new javax.swing.JLabel();
+        lblVuelto = new javax.swing.JLabel();
+        btnFinalizar = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -175,6 +193,8 @@ public final class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblInventario.setColorBackgoundHead(new java.awt.Color(0, 51, 51));
+        tblInventario.setRowHeight(25);
         jScrollPane1.setViewportView(tblInventario);
         if (tblInventario.getColumnModel().getColumnCount() > 0) {
             tblInventario.getColumnModel().getColumn(0).setResizable(false);
@@ -191,6 +211,9 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         pnlInventario.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 320, -1));
 
+        cmbCategoria.setColorArrow(new java.awt.Color(51, 0, 51));
+        cmbCategoria.setColorBorde(new java.awt.Color(51, 0, 51));
+        cmbCategoria.setColorFondo(new java.awt.Color(51, 0, 51));
         cmbCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbCategoriaActionPerformed(evt);
@@ -200,7 +223,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Categoria");
+        jLabel1.setText("Categoría");
         pnlInventario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
 
         rsPnlPrincipal.add(pnlInventario, "card3");
@@ -219,10 +242,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
         tblVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
@@ -236,6 +256,8 @@ public final class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblVentas.setColorBackgoundHead(new java.awt.Color(0, 51, 51));
+        tblVentas.setRowHeight(25);
         jScrollPane2.setViewportView(tblVentas);
         if (tblVentas.getColumnModel().getColumnCount() > 0) {
             tblVentas.getColumnModel().getColumn(0).setResizable(false);
@@ -262,17 +284,115 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
         pnlVender.setBackground(new java.awt.Color(255, 255, 204));
         pnlVender.setName("pnlVender"); // NOI18N
+        pnlVender.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout pnlVenderLayout = new javax.swing.GroupLayout(pnlVender);
-        pnlVender.setLayout(pnlVenderLayout);
-        pnlVenderLayout.setHorizontalGroup(
-            pnlVenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 880, Short.MAX_VALUE)
-        );
-        pnlVenderLayout.setVerticalGroup(
-            pnlVenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
-        );
+        tblVender.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblVender.setColorBackgoundHead(new java.awt.Color(0, 51, 51));
+        tblVender.setRowHeight(25);
+        jScrollPane3.setViewportView(tblVender);
+        if (tblVender.getColumnModel().getColumnCount() > 0) {
+            tblVender.getColumnModel().getColumn(0).setResizable(false);
+            tblVender.getColumnModel().getColumn(1).setResizable(false);
+            tblVender.getColumnModel().getColumn(2).setResizable(false);
+        }
+
+        pnlVender.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 530, 320));
+
+        lblNombre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblNombre.setForeground(new java.awt.Color(0, 0, 0));
+        lblNombre.setText("Nombre:");
+        pnlVender.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, -1, -1));
+
+        lblDireccion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblDireccion.setForeground(new java.awt.Color(0, 0, 0));
+        lblDireccion.setText("Dirección:");
+        pnlVender.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
+
+        txtNombre.setBackground(new java.awt.Color(255, 255, 255));
+        txtNombre.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        pnlVender.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 220, 40));
+
+        txtDireccion.setBackground(new java.awt.Color(255, 255, 255));
+        txtDireccion.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        pnlVender.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 220, 40));
+
+        lblNit.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblNit.setForeground(new java.awt.Color(0, 0, 0));
+        lblNit.setText("NIT:");
+        pnlVender.add(lblNit, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 90, -1, -1));
+
+        lblFecha.setForeground(new java.awt.Color(0, 0, 0));
+        lblFecha.setText("Aquí va la fecha");
+        pnlVender.add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 25, 190, 40));
+
+        txtNit.setBackground(new java.awt.Color(255, 255, 255));
+        txtNit.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        pnlVender.add(txtNit, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 73, 190, 40));
+
+        btnInventario.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/validar.png"));
+        btnValidar.setBorder(null);
+        btnValidar.setBorderPainted(false);
+        btnValidar.setContentAreaFilled(false);
+        btnValidar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlVender.add(btnValidar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 140, 110, 40));
+
+        lbltotales.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        lbltotales.setForeground(new java.awt.Color(0, 0, 0));
+        lbltotales.setText("Total:");
+        pnlVender.add(lbltotales, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 260, -1, -1));
+
+        lblTotal.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        lblTotal.setForeground(new java.awt.Color(0, 0, 0));
+        lblTotal.setText("Aquí va el total");
+        pnlVender.add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 245, 180, 40));
+
+        lblMonto.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        lblMonto.setForeground(new java.awt.Color(0, 0, 0));
+        lblMonto.setText("Monto:");
+        pnlVender.add(lblMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 320, -1, -1));
+
+        txtMonto.setBackground(new java.awt.Color(255, 255, 255));
+        txtMonto.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        pnlVender.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 310, 170, 40));
+
+        lblvueltos.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        lblvueltos.setForeground(new java.awt.Color(0, 0, 0));
+        lblvueltos.setText("Vuelto:");
+        pnlVender.add(lblvueltos, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 390, -1, -1));
+
+        lblVuelto.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        lblVuelto.setForeground(new java.awt.Color(0, 0, 0));
+        lblVuelto.setText("Aquí va el vuelto");
+        pnlVender.add(lblVuelto, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 390, 180, 30));
+
+        btnFinalizar.setBorder(null);
+        btnInventario.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/pagar.png"));
+        btnFinalizar.setBorderPainted(false);
+        btnFinalizar.setContentAreaFilled(false);
+        btnFinalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlVender.add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 570, -1, -1));
+
+        btnRegresar.setBorder(null);
+        btnInventario.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/regresar.png"));
+        btnRegresar.setBorderPainted(false);
+        btnRegresar.setContentAreaFilled(false);
+        btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlVender.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 570, -1, -1));
 
         rsPnlPrincipal.add(pnlVender, "card6");
 
@@ -335,19 +455,32 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnClientes;
+    private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnInventario;
+    private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnValidar;
     private javax.swing.JButton btnVentas;
     private rojerusan.RSComboMetro cmbCategoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblAceitera;
     private javax.swing.JLabel lblClientes;
+    private javax.swing.JLabel lblDireccion;
+    private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblInventario;
+    private javax.swing.JLabel lblMonto;
+    private javax.swing.JLabel lblNit;
+    private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblOccidente;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblVentas;
+    private javax.swing.JLabel lblVuelto;
+    private javax.swing.JLabel lbltotales;
+    private javax.swing.JLabel lblvueltos;
     private javax.swing.JPanel pnlAceitera;
     private javax.swing.JPanel pnlClientes;
     private javax.swing.JPanel pnlInventario;
@@ -357,7 +490,12 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel pnlVentas;
     private rojerusan.RSPanelsSlider rsPnlPrincipal;
     private rojerusan.RSTableMetro tblInventario;
+    private rojerusan.RSTableMetro tblVender;
     private rojerusan.RSTableMetro tblVentas;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtMonto;
+    private javax.swing.JTextField txtNit;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
     private void getTipo() {
