@@ -30,5 +30,8 @@ public class Venta {
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
     }
-    
+
+    public void realizarVenta(int idUs, int idCliente, List<Producto> productos){
+        
+    }
 }

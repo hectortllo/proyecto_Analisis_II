@@ -9,6 +9,7 @@ import gt.edu.url.clases.Conexion;
 import gt.edu.url.clases.ControladorProducto;
 import gt.edu.url.clases.ProxyTblInventario;
 import gt.edu.url.clases.ProxyTblVender;
+import gt.edu.url.clases.Venta;
 import gt.edu.url.controller.ClienteJpaController;
 import gt.edu.url.controller.TipoProductoJpaController;
 import gt.edu.url.entity.Producto;
@@ -33,6 +34,8 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private TipoProductoJpaController controllerTipoP;
     private ControladorProducto controllerProducto;
     private ClienteJpaController controllerCliente;
+    private Venta venta;
+    private String nombreUs;
     
     public FrmPrincipal(Conexion conexion) {
         initComponents();
@@ -42,7 +45,12 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         controllerTipoP = new TipoProductoJpaController(this.conexion.getEntityManager());
         controllerProducto = new ControladorProducto();
         controllerCliente = new ClienteJpaController(this.conexion.getEntityManager());
+        venta = new Venta(this.conexion.getEntityManager());
         getTipo();
+    }
+
+    public void setNombreUs(String nombreUs) {
+        this.nombreUs = nombreUs;
     }
 
     /**
@@ -63,7 +71,6 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         pnlMenus = new javax.swing.JPanel();
         btnInventario = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
-        btnClientes = new javax.swing.JButton();
         rsPnlPrincipal = new rojerusan.RSPanelsSlider();
         pnlAceitera = new javax.swing.JPanel();
         lblOccidente = new javax.swing.JLabel();
@@ -81,8 +88,6 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         lblVentas = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblVentas = new rojerusan.RSTableMetro();
-        pnlClientes = new javax.swing.JPanel();
-        lblClientes = new javax.swing.JLabel();
         pnlVender = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblVender = new rojerusan.RSTableMetro();
@@ -165,20 +170,6 @@ public final class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         pnlMenus.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, -1));
-
-        btnClientes.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/clientes.png"));
-        btnClientes.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Clientes</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
-        btnClientes.setBorder(null);
-        btnClientes.setBorderPainted(false);
-        btnClientes.setContentAreaFilled(false);
-        btnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnClientes.setName("pnlClientes"); // NOI18N
-        btnClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClientesActionPerformed(evt);
-            }
-        });
-        pnlMenus.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, -1, -1));
 
         jPanel1.add(pnlMenus, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 650));
 
@@ -312,18 +303,6 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
         rsPnlPrincipal.add(pnlVentas, "card4");
 
-        pnlClientes.setBackground(new java.awt.Color(255, 255, 204));
-        pnlClientes.setName("pnlClientes"); // NOI18N
-        pnlClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lblClientes.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
-        lblClientes.setForeground(new java.awt.Color(0, 153, 153));
-        lblClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblClientes.setText("CLIENTES");
-        pnlClientes.add(lblClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 870, 60));
-
-        rsPnlPrincipal.add(pnlClientes, "card5");
-
         pnlVender.setBackground(new java.awt.Color(255, 255, 204));
         pnlVender.setName("pnlVender"); // NOI18N
         pnlVender.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -430,12 +409,19 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         lblVuelto.setText("Aquí va el vuelto");
         pnlVender.add(lblVuelto, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 390, 180, 30));
 
+        btnFinalizar.setForeground(new java.awt.Color(0, 0, 0));
+        btnFinalizar.setText("Finalizar");
         btnFinalizar.setBorder(null);
         btnInventario.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/pagar.png"));
         btnFinalizar.setBorderPainted(false);
         btnFinalizar.setContentAreaFilled(false);
         btnFinalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlVender.add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 570, 50, 60));
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
+        pnlVender.add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 560, 90, 60));
 
         btnRegresar.setForeground(new java.awt.Color(0, 0, 0));
         btnRegresar.setText("Regresar");
@@ -488,10 +474,6 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         moverPanel(btnVentas, pnlVentas);
     }//GEN-LAST:event_btnVentasActionPerformed
 
-    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        moverPanel(btnClientes, pnlClientes);
-    }//GEN-LAST:event_btnClientesActionPerformed
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         System.out.println(conexion.desconectar());
     }//GEN-LAST:event_formWindowClosing
@@ -516,10 +498,12 @@ public final class FrmPrincipal extends javax.swing.JFrame {
             if(seleccion[i] != -1){
                 String cantidad = JOptionPane.showInputDialog("Ingrese cantidad", "Producto"+tblInventario.getModel().getValueAt(seleccion[i], 1));
                 controllerProducto.addProducto(new gt.edu.url.clases.Producto((int)tblInventario.getModel().getValueAt(seleccion[i], 0), 
-                        (String)tblInventario.getModel().getValueAt(seleccion[i], 1), (float)tblInventario.getModel().getValueAt(seleccion[i], 2), 
+                        (String)tblInventario.getModel().getValueAt(seleccion[i], 1), 
+                        (float)tblInventario.getModel().getValueAt(seleccion[i], 2)*Integer.parseInt(cantidad), 
                         Integer.parseInt(cantidad)));
             }
         }
+        lblTotal.setText(""+controllerProducto.getPrecio());
         tblVender.setModel(new ProxyTblVender(controllerProducto.getProductos()));
         rsPnlPrincipal.setPanelSlider(1, pnlVender, RSPanelsSlider.DIRECT.UP);
         controllerProducto.imprimir();
@@ -541,10 +525,14 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnValidarActionPerformed
 
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        //Aquí va la venta
+        
+    }//GEN-LAST:event_btnFinalizarActionPerformed
+
     private void moverPanel(JButton boton, JPanel panel) {
         if (!boton.isSelected()) {
             btnInventario.setSelected(false);
-            btnClientes.setSelected(false);
             btnVentas.setSelected(false);
             btnRegresar.setSelected(false);
             btnValidar.setSelected(false);
@@ -557,7 +545,6 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnIrVenta;
@@ -572,7 +559,6 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblAceitera;
-    private javax.swing.JLabel lblClientes;
     private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblInventario;
@@ -590,7 +576,6 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miOpciones;
     private javax.swing.JPopupMenu pmInventario;
     private javax.swing.JPanel pnlAceitera;
-    private javax.swing.JPanel pnlClientes;
     private javax.swing.JPanel pnlInventario;
     private javax.swing.JPanel pnlMenus;
     private javax.swing.JPanel pnlPrincipal;

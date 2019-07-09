@@ -86,6 +86,7 @@ public class Login extends javax.swing.JFrame {
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         if (this.persona.verificarLogin(txtUsuario.getText(), PswContrasenia.getText())) {
             frmPrincipal.setVisible(true);
+            frmPrincipal.setNombreUs(txtUsuario.getText());
             this.dispose();
         } else {
             System.out.println("Error usuario/contrasenia incorrecta");

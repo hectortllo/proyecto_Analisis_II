@@ -39,7 +39,7 @@ public class ControladorProducto {
     public float getPrecio(){
         float precio = 0;
         for(AbstractProduct product : productos){
-            precio = product.getPrecio();
+            precio += product.getPrecio();
         }
         return precio;
     }
