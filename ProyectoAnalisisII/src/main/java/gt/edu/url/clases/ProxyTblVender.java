@@ -9,28 +9,26 @@ import java.util.List;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import gt.edu.url.entity.Producto;
+import gt.edu.url.clases.Producto;
 /**
  *
  * @author Oswaldo Alvarez <mynoswaldo@gmail.com>
  */
-public class ProxyTblInventario implements TableModel {
+public class ProxyTblVender implements TableModel {
 
     DefaultTableModel realSubject = new DefaultTableModel();
 
-    public ProxyTblInventario(List<Producto> productos) {
+    public ProxyTblVender(List<Producto> productos) {
         realSubject.addColumn("No.");
         realSubject.addColumn("Nombre");
         realSubject.addColumn("Precio");
         realSubject.addColumn("Cantidad");
-        realSubject.addColumn("Descripción");
-        Object[] row = new Object[5];
+        Object[] row = new Object[4];
         for (Producto producto : productos) {
             row[0] = producto.getId();
             row[1] = producto.getNombre();
             row[2] = producto.getPrecio();
             row[3] = producto.getCantidad();
-            row[4] = producto.getDescripcion();
             realSubject.addRow(row);
         }
     }

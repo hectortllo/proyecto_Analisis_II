@@ -19,9 +19,10 @@ public class Main {
         Conexion conexion = Conexion.getInstancia();
         try {
             FrmPrincipal frmPrincipal = new FrmPrincipal(conexion);
-            Login login = new Login(conexion);
-            login.setVisible(true);
-            login.setFrmPrincipal(frmPrincipal);
+            //Login login = new Login(conexion);
+            //login.setVisible(true);
+            //login.setFrmPrincipal(frmPrincipal);
+            frmPrincipal.setVisible(true);
 //            TipoProductoJpaController controller = new TipoProductoJpaController(conexion.getEntityManager());
 //            System.out.println(controller.findTipoProducto(1));
 //            for (gt.edu.url.entity.Producto producto : controller.mostrar(1)) {

@@ -10,18 +10,10 @@ package gt.edu.url.clases;
  * @author Héctor Tello <hectortllo@gmail.com>
  */
 public class Producto extends AbstractProduct {
-    private String marca;
+
     
-    public Producto(String nombre, float precio, String marca){
-        super(nombre, precio);
-        this.marca = marca;
+    public Producto(int id, String nombre, float precio, int cantidad){
+        super(id, nombre, precio, cantidad);
     }
 
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }   
 }

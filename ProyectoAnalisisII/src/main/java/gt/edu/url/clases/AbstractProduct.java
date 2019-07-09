@@ -6,37 +6,33 @@ package gt.edu.url.clases;
  * @author Héctor Tello <hectortllo@gmail.com>
  */
 public abstract class AbstractProduct {
-    private String nombre;
-    private float precio;
-    private String descripcion;
+    private gt.edu.url.entity.Producto producto;
+    
+    public int getId() {
+        return producto.getId();
+    }
 
-    public AbstractProduct(String nombre, float precio){
-        this.nombre = nombre;
-        this.precio = precio;
+    public int getCantidad() {
+        return producto.getCantidad();
+    }
+
+    public AbstractProduct(int id, String nombre, float precio, int cantidad){
+        producto = new gt.edu.url.entity.Producto();
+        producto.setNombre(nombre);
+        producto.setPrecio(precio);
+        producto.setId(id);
+        producto.setCantidad(cantidad);
     }
     
     public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+        return producto.getNombre();
     }
 
     public float getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(float precio) {
-        this.precio = precio;
+        return producto.getPrecio();
     }
 
     public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-        
+        return producto.getDescripcion();
+    }        
 }

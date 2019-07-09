@@ -180,4 +180,19 @@ public class ClienteJpaController implements Serializable {
         }
     }
     
+    public List<Object> buscar(String nit){
+        try {
+            Cliente cliente = (Cliente) em.createNamedQuery("Cliente.findByNit").setParameter("nit", nit).getSingleResult();
+            List<Object> lista = new ArrayList<Object>();
+            lista.add(cliente.getId());
+            lista.add(cliente.getNombre());
+            lista.add(cliente.getDireccion());
+            return lista;
+            
+        } catch (Exception e) {
+            return null;
+        }
+        
+    }
+    
 }

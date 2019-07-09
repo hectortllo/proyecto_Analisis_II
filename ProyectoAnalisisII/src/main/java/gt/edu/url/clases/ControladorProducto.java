@@ -47,7 +47,8 @@ public class ControladorProducto {
     public void imprimir(){
         System.out.println("----------------------------------------------");
         for(AbstractProduct product : productos){
-            System.out.println(product.getNombre() + " " + product.getPrecio());
+            System.out.println(product.getNombre() + " " + product.getPrecio()
+            + product.getCantidad());
         }
         System.out.println("----------------------------------------------");
     }

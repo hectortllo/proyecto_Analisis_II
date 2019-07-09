@@ -6,10 +6,16 @@
 package gt.edu.url.vista;
 
 import gt.edu.url.clases.Conexion;
+import gt.edu.url.clases.ControladorProducto;
+import gt.edu.url.clases.ProxyTblInventario;
+import gt.edu.url.clases.ProxyTblVender;
+import gt.edu.url.controller.ClienteJpaController;
 import gt.edu.url.controller.TipoProductoJpaController;
 import gt.edu.url.entity.Producto;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import rojerusan.RSPanelsSlider;
@@ -25,6 +31,8 @@ public final class FrmPrincipal extends javax.swing.JFrame {
      */
     private Conexion conexion;
     private TipoProductoJpaController controllerTipoP;
+    private ControladorProducto controllerProducto;
+    private ClienteJpaController controllerCliente;
     
     public FrmPrincipal(Conexion conexion) {
         initComponents();
@@ -32,6 +40,8 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         this.setResizable(false);
         this.conexion = conexion;
         controllerTipoP = new TipoProductoJpaController(this.conexion.getEntityManager());
+        controllerProducto = new ControladorProducto();
+        controllerCliente = new ClienteJpaController(this.conexion.getEntityManager());
         getTipo();
     }
 
@@ -44,6 +54,10 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pmInventario = new javax.swing.JPopupMenu();
+        mOpciones = new javax.swing.JMenu();
+        miOpciones = new javax.swing.JMenuItem();
+        miDescripcion = new javax.swing.JMenuItem();
         pnlPrincipal = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         pnlMenus = new javax.swing.JPanel();
@@ -62,6 +76,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         cmbCategoria = new rojerusan.RSComboMetro();
         jLabel1 = new javax.swing.JLabel();
+        btnIrVenta = new javax.swing.JButton();
         pnlVentas = new javax.swing.JPanel();
         lblVentas = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -87,6 +102,27 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         lblVuelto = new javax.swing.JLabel();
         btnFinalizar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
+
+        mOpciones.setText("Opciones");
+
+        miOpciones.setText("Agregar a Venta");
+        miOpciones.setContentAreaFilled(false);
+        miOpciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miOpcionesActionPerformed(evt);
+            }
+        });
+        mOpciones.add(miOpciones);
+
+        miDescripcion.setText("Descipción");
+        miDescripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miDescripcionActionPerformed(evt);
+            }
+        });
+        mOpciones.add(miDescripcion);
+
+        pmInventario.add(mOpciones);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -182,11 +218,11 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Precio", "Cantidad"
+                "No.", "Nombre", "Precio", "Cantidad"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -194,15 +230,17 @@ public final class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         tblInventario.setColorBackgoundHead(new java.awt.Color(0, 51, 51));
+        tblInventario.setComponentPopupMenu(pmInventario);
         tblInventario.setRowHeight(25);
         jScrollPane1.setViewportView(tblInventario);
         if (tblInventario.getColumnModel().getColumnCount() > 0) {
             tblInventario.getColumnModel().getColumn(0).setResizable(false);
             tblInventario.getColumnModel().getColumn(1).setResizable(false);
             tblInventario.getColumnModel().getColumn(2).setResizable(false);
+            tblInventario.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        pnlInventario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 790, 430));
+        pnlInventario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 790, 430));
 
         btnBuscar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnBuscar.setText("Buscar");
@@ -225,6 +263,10 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Categoría");
         pnlInventario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
+
+        btnIrVenta.setText("Ir a Venta");
+        btnIrVenta.setEnabled(false);
+        pnlInventario.add(btnIrVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 600, -1, -1));
 
         rsPnlPrincipal.add(pnlInventario, "card3");
 
@@ -291,11 +333,11 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3"
+                "No", "Nombre", "Precio", "Cantidad"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -309,6 +351,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
             tblVender.getColumnModel().getColumn(0).setResizable(false);
             tblVender.getColumnModel().getColumn(1).setResizable(false);
             tblVender.getColumnModel().getColumn(2).setResizable(false);
+            tblVender.getColumnModel().getColumn(3).setResizable(false);
         }
 
         pnlVender.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 530, 320));
@@ -344,11 +387,18 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         txtNit.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         pnlVender.add(txtNit, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 73, 190, 40));
 
+        btnValidar.setForeground(new java.awt.Color(0, 0, 0));
+        btnValidar.setText("Validar");
         btnInventario.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/validar.png"));
         btnValidar.setBorder(null);
         btnValidar.setBorderPainted(false);
         btnValidar.setContentAreaFilled(false);
         btnValidar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnValidar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnValidarActionPerformed(evt);
+            }
+        });
         pnlVender.add(btnValidar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 140, 110, 40));
 
         lbltotales.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
@@ -385,14 +435,21 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         btnFinalizar.setBorderPainted(false);
         btnFinalizar.setContentAreaFilled(false);
         btnFinalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlVender.add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 570, -1, -1));
+        pnlVender.add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 570, 50, 60));
 
+        btnRegresar.setForeground(new java.awt.Color(0, 0, 0));
+        btnRegresar.setText("Regresar");
         btnRegresar.setBorder(null);
         btnInventario.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/regresar.png"));
         btnRegresar.setBorderPainted(false);
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlVender.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 570, -1, -1));
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+        pnlVender.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 560, 90, 60));
 
         rsPnlPrincipal.add(pnlVender, "card6");
 
@@ -440,16 +497,62 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void cmbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoriaActionPerformed
-        buscar(cmbCategoria.getSelectedIndex()+1);
+        tblInventario.setModel(new ProxyTblInventario(controllerTipoP.mostrar(cmbCategoria.getSelectedIndex()+1)));
     }//GEN-LAST:event_cmbCategoriaActionPerformed
+
+    private void miDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDescripcionActionPerformed
+        int seleccion = tblInventario.getSelectedRow();
+        if (seleccion != -1) {
+            String mensaje = (String) tblInventario.getModel().getValueAt(seleccion, 4);
+            JOptionPane.showMessageDialog(null, mensaje);
+        }
+        
+        
+    }//GEN-LAST:event_miDescripcionActionPerformed
+
+    private void miOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miOpcionesActionPerformed
+        int seleccion[] = tblInventario.getSelectedRows();
+        for(int i=0; i<seleccion.length; i++){
+            if(seleccion[i] != -1){
+                String cantidad = JOptionPane.showInputDialog("Ingrese cantidad", "Producto"+tblInventario.getModel().getValueAt(seleccion[i], 1));
+                controllerProducto.addProducto(new gt.edu.url.clases.Producto((int)tblInventario.getModel().getValueAt(seleccion[i], 0), 
+                        (String)tblInventario.getModel().getValueAt(seleccion[i], 1), (float)tblInventario.getModel().getValueAt(seleccion[i], 2), 
+                        Integer.parseInt(cantidad)));
+            }
+        }
+        tblVender.setModel(new ProxyTblVender(controllerProducto.getProductos()));
+        rsPnlPrincipal.setPanelSlider(1, pnlVender, RSPanelsSlider.DIRECT.UP);
+        controllerProducto.imprimir();
+    }//GEN-LAST:event_miOpcionesActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        moverPanel(btnVentas, pnlInventario);
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
+        if(txtNit.getText().length() != 0){
+            List<Object> lista = controllerCliente.buscar(txtNit.getText());
+            if(lista != null){
+                txtNombre.setText(""+ lista.get(1));
+                txtDireccion.setText(""+lista.get(2));
+                
+            } else
+                JOptionPane.showMessageDialog(null, "El cliente no existe, por lo que se creará");
+        }
+    }//GEN-LAST:event_btnValidarActionPerformed
 
     private void moverPanel(JButton boton, JPanel panel) {
         if (!boton.isSelected()) {
             btnInventario.setSelected(false);
             btnClientes.setSelected(false);
             btnVentas.setSelected(false);
+            btnRegresar.setSelected(false);
+            btnValidar.setSelected(false);
+            btnFinalizar.setSelected(false);
+            btnBuscar.setSelected(false);
+            btnIrVenta.setSelected(false);
             boton.setSelected(true);
-            rsPnlPrincipal.setPanelSlider(10, panel, RSPanelsSlider.DIRECT.RIGHT);
+            rsPnlPrincipal.setPanelSlider(1, panel, RSPanelsSlider.DIRECT.RIGHT);
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -457,6 +560,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnInventario;
+    private javax.swing.JButton btnIrVenta;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnValidar;
     private javax.swing.JButton btnVentas;
@@ -481,6 +585,10 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lblVuelto;
     private javax.swing.JLabel lbltotales;
     private javax.swing.JLabel lblvueltos;
+    private javax.swing.JMenu mOpciones;
+    private javax.swing.JMenuItem miDescripcion;
+    private javax.swing.JMenuItem miOpciones;
+    private javax.swing.JPopupMenu pmInventario;
     private javax.swing.JPanel pnlAceitera;
     private javax.swing.JPanel pnlClientes;
     private javax.swing.JPanel pnlInventario;
@@ -504,20 +612,4 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         cmbCategoria.setModel(model);
     }
 
-    private void buscar(int index) {
-        DefaultTableModel model1 = new DefaultTableModel();
-        model1.addColumn("Nombre");
-        model1.addColumn("Precio");
-        model1.addColumn("Cantidad");
-        if (index != 0) {
-            Object[] row = new Object[3];
-            for (Producto producto : controllerTipoP.mostrar(index)) {
-                row[0] = producto.getNombre();
-                row[1] = producto.getPrecio();
-                row[2] = producto.getCantidad();
-                model1.addRow(row);
-            }
-        }
-        tblInventario.setModel(model1);
-    }
 }

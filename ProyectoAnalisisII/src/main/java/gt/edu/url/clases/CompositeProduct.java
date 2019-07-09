@@ -17,7 +17,7 @@ public class CompositeProduct extends AbstractProduct {
     private List<AbstractProduct> productos = new ArrayList<AbstractProduct>();
     
     public CompositeProduct(String nombre){
-        super(nombre, 0);
+        super(0, "", 0, 0);
     }
     
     @Override
