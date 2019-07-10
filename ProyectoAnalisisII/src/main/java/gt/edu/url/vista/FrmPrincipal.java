@@ -15,6 +15,7 @@ import gt.edu.url.controller.ClienteJpaController;
 import gt.edu.url.controller.TipoProductoJpaController;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -40,6 +41,11 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        btnInventario.setIcon(new ImageIcon("src/main/java/gt/edu/url/Imagenes/inventario.png"));
+        btnVentas.setIcon(new ImageIcon("src/main/java/gt/edu/url/Imagenes/ventas.png"));
+        btnValidar.setIcon(new ImageIcon("src/main/java/gt/edu/url/Imagenes/validar.png"));
+        btnFinalizar.setIcon(new ImageIcon("src/main/java/gt/edu/url/Imagenes/pagar.png"));
+        btnRegresar.setIcon(new  ImageIcon("src/main/java/gt/edu/url/Imagenes/regresar.png"));
         this.conexion = conexion;
         controllerTipoP = new TipoProductoJpaController(this.conexion.getEntityManager());
         controllerProducto = new ControladorProducto();
@@ -156,7 +162,6 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         pnlMenus.setBackground(new java.awt.Color(204, 255, 204));
         pnlMenus.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnInventario.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/inventario.png"));
         btnInventario.setText("\n");
         btnInventario.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Inventario</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnInventario.setBorder(null);
@@ -171,7 +176,6 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         });
         pnlMenus.add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
 
-        btnVentas.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/ventas.png"));
         btnVentas.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Ventas</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnVentas.setBorder(null);
         btnVentas.setBorderPainted(false);
@@ -271,6 +275,11 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
         btnIrVenta.setText("Ir a Venta");
         btnIrVenta.setEnabled(false);
+        btnIrVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIrVentaActionPerformed(evt);
+            }
+        });
         pnlInventario.add(btnIrVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 600, -1, -1));
 
         rsPnlPrincipal.add(pnlInventario, "card3");
@@ -382,8 +391,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         pnlVender.add(txtNit, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 73, 190, 40));
 
         btnValidar.setForeground(new java.awt.Color(0, 0, 0));
-        btnValidar.setText("Validar");
-        btnInventario.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/validar.png"));
+        btnValidar.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Validar NIT</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnValidar.setBorder(null);
         btnValidar.setBorderPainted(false);
         btnValidar.setContentAreaFilled(false);
@@ -393,7 +401,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
                 btnValidarActionPerformed(evt);
             }
         });
-        pnlVender.add(btnValidar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 140, 110, 40));
+        pnlVender.add(btnValidar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 140, 110, 60));
 
         lbltotales.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         lbltotales.setForeground(new java.awt.Color(0, 0, 0));
@@ -421,13 +429,11 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
         lblVuelto.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         lblVuelto.setForeground(new java.awt.Color(0, 0, 0));
-        lblVuelto.setText("Aquí va el vuelto");
         pnlVender.add(lblVuelto, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 390, 180, 30));
 
         btnFinalizar.setForeground(new java.awt.Color(0, 0, 0));
-        btnFinalizar.setText("Finalizar");
+        btnFinalizar.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Finalizar</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnFinalizar.setBorder(null);
-        btnInventario.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/pagar.png"));
         btnFinalizar.setBorderPainted(false);
         btnFinalizar.setContentAreaFilled(false);
         btnFinalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -439,9 +445,8 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         pnlVender.add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 560, 90, 60));
 
         btnRegresar.setForeground(new java.awt.Color(0, 0, 0));
-        btnRegresar.setText("Regresar");
+        btnRegresar.setToolTipText("<html>\n<head>\n\t<style>\n\t\t #contenido{ \n\t\tbackground: #FFA533;  /*Se le da un color de fondo*/\n\t\tcolor: white;\t\t  /*Color a la letra*/\n\t\t}\n\t</style>\n</head>\n<body>\n\t<div id=contenido>\n\t\t<h2>Regresar</h2>\n\t\t<!-- <img src=\"Path img\"> -->\n\t</div>\n</body>\n</html>");
         btnRegresar.setBorder(null);
-        btnInventario.setIcon(new javax.swing.ImageIcon("src/main/java/gt/edu/url/Imagenes/regresar.png"));
         btnRegresar.setBorderPainted(false);
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -508,20 +513,33 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miDescripcionActionPerformed
 
     private void miOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miOpcionesActionPerformed
+        boolean paso = false;
         int seleccion[] = tblInventario.getSelectedRows();
         for (int i = 0; i < seleccion.length; i++) {
             if (seleccion[i] != -1) {
                 String cantidad = JOptionPane.showInputDialog("Ingrese cantidad", "Producto" + tblInventario.getModel().getValueAt(seleccion[i], 1));
-                controllerProducto.addProducto(new gt.edu.url.clases.Producto((int) tblInventario.getModel().getValueAt(seleccion[i], 0),
+                if(cantidad.length() != 0){
+                    if(Integer.parseInt(cantidad) > (int)tblInventario.getModel().getValueAt(seleccion[i], 3)){
+                    JOptionPane.showMessageDialog(null, "No puede agregar más de lo que hay en Inventario");
+                    } else {
+                        paso = true;
+                        controllerProducto.addProducto(new gt.edu.url.clases.Producto((int) tblInventario.getModel().getValueAt(seleccion[i], 0),
                         (String) tblInventario.getModel().getValueAt(seleccion[i], 1),
                         (float) tblInventario.getModel().getValueAt(seleccion[i], 2),
                         Integer.parseInt(cantidad)));
+                    }
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Ingrese cantidad");
             }
         }
-        lblTotal.setText("" + controllerProducto.getPrecio());
-        tblVender.setModel(new ProxyTblVender(controllerProducto.getProductos()));
-        rsPnlPrincipal.setPanelSlider(1, pnlVender, RSPanelsSlider.DIRECT.UP);
-        controllerProducto.imprimir();
+        if(paso){
+            lblTotal.setText("" + controllerProducto.getPrecio());
+            tblVender.setModel(new ProxyTblVender(controllerProducto.getProductos()));
+            rsPnlPrincipal.setPanelSlider(1, pnlVender, RSPanelsSlider.DIRECT.UP);
+            controllerProducto.imprimir();
+            btnIrVenta.setEnabled(true);
+        }
     }//GEN-LAST:event_miOpcionesActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -542,11 +560,17 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         //Aquí va la venta
-        venta.setProductos(controllerProducto.getProductos());
-        String mensaje = venta.realizarVenta("Oswaldo1234", txtNit.getText(), controllerProducto.getPrecio())
-                ? "Venta realizada correctamente"
-                : "Error al realizar la venta";
-        JOptionPane.showMessageDialog(null, mensaje);
+        if(txtMonto.getText().length() != 0 && (Float.parseFloat(txtMonto.getText())> Float.parseFloat(lblTotal.getText())) &&
+                txtNit.getText().length() != 0){
+            lblVuelto.setText(""+(Float.parseFloat(txtMonto.getText())-Float.parseFloat(lblTotal.getText())));
+            venta.setProductos(controllerProducto.getProductos());
+            String mensaje = venta.realizarVenta("Oswaldo1234", txtNit.getText(), controllerProducto.getPrecio())
+                    ? "Venta realizada correctamente"
+                    : "Error al realizar la venta";
+            JOptionPane.showMessageDialog(null, mensaje);
+        } else {
+            JOptionPane.showMessageDialog(null, "Verifique que el Monto sea mayor al total o que el campo NIT esté lleno");
+        }
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void miEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miEliminarActionPerformed
@@ -559,6 +583,10 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         tblVender.setModel(new ProxyTblVender(controllerProducto.getProductos()));
         controllerProducto.imprimir();
     }//GEN-LAST:event_miEliminarActionPerformed
+
+    private void btnIrVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrVentaActionPerformed
+        moverPanel(btnIrVenta, pnlVender);
+    }//GEN-LAST:event_btnIrVentaActionPerformed
 
     private void moverPanel(JButton boton, JPanel panel) {
         if (!boton.isSelected()) {
