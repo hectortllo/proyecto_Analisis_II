@@ -48,7 +48,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         btnRegresar.setIcon(new  ImageIcon("src/main/java/gt/edu/url/Imagenes/regresar.png"));
         this.conexion = conexion;
         controllerTipoP = new TipoProductoJpaController(this.conexion.getEntityManager());
-        controllerProducto = new ControladorProducto();
+        controllerProducto = new ControladorProducto(this.conexion.getEntityManager());
         controllerCliente = new ClienteJpaController(this.conexion.getEntityManager());
         venta = new Venta(this.conexion.getEntityManager());
         getTipo();
@@ -564,10 +564,11 @@ public final class FrmPrincipal extends javax.swing.JFrame {
                 txtNit.getText().length() != 0){
             lblVuelto.setText(""+(Float.parseFloat(txtMonto.getText())-Float.parseFloat(lblTotal.getText())));
             venta.setProductos(controllerProducto.getProductos());
-            String mensaje = venta.realizarVenta("usuario", txtNit.getText(), controllerProducto.getPrecio())
+            String mensaje = venta.realizarVenta("Oswaldo1234", txtNit.getText(), controllerProducto.getPrecio())
                     ? "Venta realizada correctamente"
                     : "Error al realizar la venta";
             JOptionPane.showMessageDialog(null, mensaje);
+            controllerProducto.ActualizarProducto();
         } else {
             JOptionPane.showMessageDialog(null, "Verifique que el Monto sea mayor al total o que el campo NIT esté lleno");
         }

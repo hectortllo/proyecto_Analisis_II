@@ -5,8 +5,13 @@
  */
 package gt.edu.url.clases;
 
+import gt.edu.url.controller.ProductoJpaController;
+import gt.edu.url.controller.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -15,8 +20,10 @@ import java.util.List;
 public class ControladorProducto {
 
     private List<AbstractProduct> productos;
+    private ProductoJpaController controller;
 
-    public ControladorProducto() {
+    public ControladorProducto(EntityManager em) {
+        controller = new ProductoJpaController(em);
         productos = new ArrayList<AbstractProduct>();
     }
 
@@ -53,4 +60,18 @@ public class ControladorProducto {
         System.out.println("----------------------------------------------");
     }
 
+    public void ActualizarProducto() {
+        for (AbstractProduct product : productos) {
+            try {
+                gt.edu.url.entity.Producto producto = controller.findProducto(product.getId());
+                System.out.println(product.getCantidad()+" - "+producto.getCantidad());
+                producto.setCantidad(producto.getCantidad()-product.getCantidad());
+                controller.edit(producto);
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(ControladorProducto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(ControladorProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }
