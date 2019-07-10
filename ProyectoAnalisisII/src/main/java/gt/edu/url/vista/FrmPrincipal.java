@@ -5,6 +5,7 @@
  */
 package gt.edu.url.vista;
 
+import gt.edu.url.clases.AbstractProduct;
 import gt.edu.url.clases.Conexion;
 import gt.edu.url.clases.ControladorProducto;
 import gt.edu.url.clases.ProxyTblInventario;
@@ -66,6 +67,9 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         mOpciones = new javax.swing.JMenu();
         miOpciones = new javax.swing.JMenuItem();
         miDescripcion = new javax.swing.JMenuItem();
+        pmVenta = new javax.swing.JPopupMenu();
+        mOpcs = new javax.swing.JMenu();
+        miEliminar = new javax.swing.JMenuItem();
         pnlPrincipal = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         pnlMenus = new javax.swing.JPanel();
@@ -128,6 +132,18 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         mOpciones.add(miDescripcion);
 
         pmInventario.add(mOpciones);
+
+        mOpcs.setText("Opciones");
+
+        miEliminar.setText("Eliminar Producto");
+        miEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miEliminarActionPerformed(evt);
+            }
+        });
+        mOpcs.add(miEliminar);
+
+        pmVenta.add(mOpcs);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -324,6 +340,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         tblVender.setColorBackgoundHead(new java.awt.Color(0, 51, 51));
+        tblVender.setComponentPopupMenu(pmVenta);
         tblVender.setRowHeight(25);
         jScrollPane3.setViewportView(tblVender);
         if (tblVender.getColumnModel().getColumnCount() > 0) {
@@ -530,6 +547,17 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
+    private void miEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miEliminarActionPerformed
+        System.out.println("Después de eliminar");
+        int seleccion = tblVender.getSelectedRow();
+        if(seleccion != -1){
+            controllerProducto.removerProducto((AbstractProduct) controllerProducto.getProductos().get(seleccion));
+        }
+        lblTotal.setText(""+controllerProducto.getPrecio());
+        tblVender.setModel(new ProxyTblVender(controllerProducto.getProductos()));
+        controllerProducto.imprimir();
+    }//GEN-LAST:event_miEliminarActionPerformed
+
     private void moverPanel(JButton boton, JPanel panel) {
         if (!boton.isSelected()) {
             btnInventario.setSelected(false);
@@ -572,9 +600,12 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lbltotales;
     private javax.swing.JLabel lblvueltos;
     private javax.swing.JMenu mOpciones;
+    private javax.swing.JMenu mOpcs;
     private javax.swing.JMenuItem miDescripcion;
+    private javax.swing.JMenuItem miEliminar;
     private javax.swing.JMenuItem miOpciones;
     private javax.swing.JPopupMenu pmInventario;
+    private javax.swing.JPopupMenu pmVenta;
     private javax.swing.JPanel pnlAceitera;
     private javax.swing.JPanel pnlInventario;
     private javax.swing.JPanel pnlMenus;
