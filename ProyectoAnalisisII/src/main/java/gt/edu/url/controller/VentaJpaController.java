@@ -231,5 +231,11 @@ public class VentaJpaController implements Serializable {
             return ((Long) q.getSingleResult()).intValue();
         } finally {}
     }
-    
+    public Venta findVentaMaxId(){
+        try {
+            return findVenta(getVentaCount());
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

@@ -144,5 +144,5 @@ public class Venta implements Serializable {
     public String toString() {
         return "gt.edu.url.entity.Venta[ id=" + id + " ]";
     }
-    
+
 }

@@ -13,13 +13,11 @@ import gt.edu.url.clases.ProxyTblVender;
 import gt.edu.url.clases.Venta;
 import gt.edu.url.controller.ClienteJpaController;
 import gt.edu.url.controller.TipoProductoJpaController;
-import gt.edu.url.entity.Producto;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.table.DefaultTableModel;
 import rojerusan.RSPanelsSlider;
 
 /**
@@ -37,7 +35,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private ClienteJpaController controllerCliente;
     private Venta venta;
     private String nombreUs;
-    
+
     public FrmPrincipal(Conexion conexion) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -496,7 +494,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void cmbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoriaActionPerformed
-        tblInventario.setModel(new ProxyTblInventario(controllerTipoP.mostrar(cmbCategoria.getSelectedIndex()+1)));
+        tblInventario.setModel(new ProxyTblInventario(controllerTipoP.mostrar(cmbCategoria.getSelectedIndex() + 1)));
     }//GEN-LAST:event_cmbCategoriaActionPerformed
 
     private void miDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDescripcionActionPerformed
@@ -505,22 +503,22 @@ public final class FrmPrincipal extends javax.swing.JFrame {
             String mensaje = (String) tblInventario.getModel().getValueAt(seleccion, 4);
             JOptionPane.showMessageDialog(null, mensaje);
         }
-        
-        
+
+
     }//GEN-LAST:event_miDescripcionActionPerformed
 
     private void miOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miOpcionesActionPerformed
         int seleccion[] = tblInventario.getSelectedRows();
-        for(int i=0; i<seleccion.length; i++){
-            if(seleccion[i] != -1){
-                String cantidad = JOptionPane.showInputDialog("Ingrese cantidad", "Producto"+tblInventario.getModel().getValueAt(seleccion[i], 1));
-                controllerProducto.addProducto(new gt.edu.url.clases.Producto((int)tblInventario.getModel().getValueAt(seleccion[i], 0), 
-                        (String)tblInventario.getModel().getValueAt(seleccion[i], 1), 
-                        (float)tblInventario.getModel().getValueAt(seleccion[i], 2)*Integer.parseInt(cantidad), 
+        for (int i = 0; i < seleccion.length; i++) {
+            if (seleccion[i] != -1) {
+                String cantidad = JOptionPane.showInputDialog("Ingrese cantidad", "Producto" + tblInventario.getModel().getValueAt(seleccion[i], 1));
+                controllerProducto.addProducto(new gt.edu.url.clases.Producto((int) tblInventario.getModel().getValueAt(seleccion[i], 0),
+                        (String) tblInventario.getModel().getValueAt(seleccion[i], 1),
+                        (float) tblInventario.getModel().getValueAt(seleccion[i], 2),
                         Integer.parseInt(cantidad)));
             }
         }
-        lblTotal.setText(""+controllerProducto.getPrecio());
+        lblTotal.setText("" + controllerProducto.getPrecio());
         tblVender.setModel(new ProxyTblVender(controllerProducto.getProductos()));
         rsPnlPrincipal.setPanelSlider(1, pnlVender, RSPanelsSlider.DIRECT.UP);
         controllerProducto.imprimir();
@@ -531,29 +529,33 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
-        if(txtNit.getText().length() != 0){
+        if (txtNit.getText().length() != 0) {
             List<Object> lista = controllerCliente.buscar(txtNit.getText());
-            if(lista != null){
-                txtNombre.setText(""+ lista.get(1));
-                txtDireccion.setText(""+lista.get(2));
-                
-            } else
+            if (lista != null) {
+                txtNombre.setText("" + lista.get(0));
+                txtDireccion.setText("" + lista.get(1));
+            } else {
                 JOptionPane.showMessageDialog(null, "El cliente no existe, por lo que se creará");
+            }
         }
     }//GEN-LAST:event_btnValidarActionPerformed
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         //Aquí va la venta
-        
+        venta.setProductos(controllerProducto.getProductos());
+        String mensaje = venta.realizarVenta("Oswaldo1234", txtNit.getText(), controllerProducto.getPrecio())
+                ? "Venta realizada correctamente"
+                : "Error al realizar la venta";
+        JOptionPane.showMessageDialog(null, mensaje);
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void miEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miEliminarActionPerformed
         System.out.println("Después de eliminar");
         int seleccion = tblVender.getSelectedRow();
-        if(seleccion != -1){
+        if (seleccion != -1) {
             controllerProducto.removerProducto((AbstractProduct) controllerProducto.getProductos().get(seleccion));
         }
-        lblTotal.setText(""+controllerProducto.getPrecio());
+        lblTotal.setText("" + controllerProducto.getPrecio());
         tblVender.setModel(new ProxyTblVender(controllerProducto.getProductos()));
         controllerProducto.imprimir();
     }//GEN-LAST:event_miEliminarActionPerformed

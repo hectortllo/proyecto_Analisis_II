@@ -1,4 +1,3 @@
-
 package gt.edu.url.clases;
 
 /**
@@ -6,8 +5,9 @@ package gt.edu.url.clases;
  * @author Héctor Tello <hectortllo@gmail.com>
  */
 public abstract class AbstractProduct {
+
     private gt.edu.url.entity.Producto producto;
-    
+
     public int getId() {
         return producto.getId();
     }
@@ -16,14 +16,14 @@ public abstract class AbstractProduct {
         return producto.getCantidad();
     }
 
-    public AbstractProduct(int id, String nombre, float precio, int cantidad){
+    public AbstractProduct(int id, String nombre, float precio, int cantidad) {
         producto = new gt.edu.url.entity.Producto();
         producto.setNombre(nombre);
         producto.setPrecio(precio);
         producto.setId(id);
         producto.setCantidad(cantidad);
     }
-    
+
     public String getNombre() {
         return producto.getNombre();
     }
@@ -34,5 +34,5 @@ public abstract class AbstractProduct {
 
     public String getDescripcion() {
         return producto.getDescripcion();
-    }        
+    }
 }

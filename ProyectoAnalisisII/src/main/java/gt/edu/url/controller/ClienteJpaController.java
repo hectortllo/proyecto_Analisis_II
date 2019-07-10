@@ -183,16 +183,20 @@ public class ClienteJpaController implements Serializable {
     public List<Object> buscar(String nit){
         try {
             Cliente cliente = (Cliente) em.createNamedQuery("Cliente.findByNit").setParameter("nit", nit).getSingleResult();
-            List<Object> lista = new ArrayList<Object>();
-            lista.add(cliente.getId());
+            List<Object> lista = new ArrayList<>();
             lista.add(cliente.getNombre());
             lista.add(cliente.getDireccion());
             return lista;
-            
         } catch (Exception e) {
             return null;
         }
         
     }
-    
+    public Cliente findId(String nit) {
+        try {
+            return (Cliente) em.createNamedQuery("Cliente.findByNit").setParameter("nit", nit).getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

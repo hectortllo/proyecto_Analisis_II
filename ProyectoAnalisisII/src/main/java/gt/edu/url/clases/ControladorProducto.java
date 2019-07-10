@@ -13,44 +13,44 @@ import java.util.List;
  * @author Héctor Tello <hectortllo@gmail.com>
  */
 public class ControladorProducto {
-    
+
     private List<AbstractProduct> productos;
-    
-    public ControladorProducto(){
+
+    public ControladorProducto() {
         productos = new ArrayList<AbstractProduct>();
     }
-    
-    public List getProductos(){
+
+    public List getProductos() {
         return this.productos;
     }
-    
-    public void setProductos(List productos){
+
+    public void setProductos(List productos) {
         this.productos = productos;
     }
-    
-    public void addProducto(AbstractProduct producto){
+
+    public void addProducto(AbstractProduct producto) {
         this.productos.add(producto);
     }
-    
-    public void removerProducto(AbstractProduct producto){
+
+    public void removerProducto(AbstractProduct producto) {
         this.productos.remove(producto);
     }
-    
-    public float getPrecio(){
+
+    public float getPrecio() {
         float precio = 0;
-        for(AbstractProduct product : productos){
-            precio += product.getPrecio();
+        for (AbstractProduct product : productos) {
+            precio += product.getPrecio() * product.getCantidad();
         }
         return precio;
     }
-    
-    public void imprimir(){
+
+    public void imprimir() {
         System.out.println("----------------------------------------------");
-        for(AbstractProduct product : productos){
+        for (AbstractProduct product : productos) {
             System.out.println(product.getNombre() + " " + product.getPrecio()
-            + product.getCantidad());
+                    + product.getCantidad());
         }
         System.out.println("----------------------------------------------");
     }
-    
+
 }
