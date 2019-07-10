@@ -88,8 +88,8 @@ public class Venta implements Serializable {
         this.total = total;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public String getFecha() {
+        return fecha.getDay()+"/"+fecha.getMonth()+"/"+fecha.getYear();
     }
 
     public void setFecha(Date fecha) {

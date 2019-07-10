@@ -10,9 +10,12 @@ import gt.edu.url.clases.Conexion;
 import gt.edu.url.clases.ControladorProducto;
 import gt.edu.url.clases.ProxyTblInventario;
 import gt.edu.url.clases.ProxyTblVender;
+import gt.edu.url.clases.ProxyTblVentas;
 import gt.edu.url.clases.Venta;
 import gt.edu.url.controller.ClienteJpaController;
 import gt.edu.url.controller.TipoProductoJpaController;
+import gt.edu.url.controller.VentaJpaController;
+import gt.edu.url.entity.Producto;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -35,11 +38,13 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private ControladorProducto controllerProducto;
     private ClienteJpaController controllerCliente;
     private Venta venta;
+    private VentaJpaController controllerVenta;
     private String nombreUs;
-
+    
     public FrmPrincipal(Conexion conexion) {
         initComponents();
         this.setLocationRelativeTo(null);
+        //btnVentas.setVisible(false);
         this.setResizable(false);
         btnInventario.setIcon(new ImageIcon("src/main/java/gt/edu/url/Imagenes/inventario.png"));
         btnVentas.setIcon(new ImageIcon("src/main/java/gt/edu/url/Imagenes/ventas.png"));
@@ -51,9 +56,10 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         controllerProducto = new ControladorProducto(this.conexion.getEntityManager());
         controllerCliente = new ClienteJpaController(this.conexion.getEntityManager());
         venta = new Venta(this.conexion.getEntityManager());
+        controllerVenta = new VentaJpaController(this.conexion.getEntityManager());
         getTipo();
     }
-
+    
     public void setNombreUs(String nombreUs) {
         this.nombreUs = nombreUs;
     }
@@ -301,11 +307,11 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "No.", "Total", "Fecha", "Cliente", "Usuario"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -320,9 +326,10 @@ public final class FrmPrincipal extends javax.swing.JFrame {
             tblVentas.getColumnModel().getColumn(1).setResizable(false);
             tblVentas.getColumnModel().getColumn(2).setResizable(false);
             tblVentas.getColumnModel().getColumn(3).setResizable(false);
+            tblVentas.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        pnlVentas.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 810, 520));
+        pnlVentas.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 850, 540));
 
         rsPnlPrincipal.add(pnlVentas, "card4");
 
@@ -491,6 +498,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
+        tblVentas.setModel(new ProxyTblVentas(controllerVenta.findVentaEntities()));
         moverPanel(btnVentas, pnlVentas);
     }//GEN-LAST:event_btnVentasActionPerformed
 
@@ -508,7 +516,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
             String mensaje = (String) tblInventario.getModel().getValueAt(seleccion, 4);
             JOptionPane.showMessageDialog(null, mensaje);
         }
-
+        
 
     }//GEN-LAST:event_miDescripcionActionPerformed
 
@@ -545,7 +553,14 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         moverPanel(btnVentas, pnlInventario);
     }//GEN-LAST:event_btnRegresarActionPerformed
-
+    
+    private void limpiarCampos() {
+        txtNit.setText("");
+        txtDireccion.setText("");
+        txtNombre.setText("");
+        txtMonto.setText("");
+        lblVuelto.setText("");
+    }
     private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
         if (txtNit.getText().length() != 0) {
             List<Object> lista = controllerCliente.buscar(txtNit.getText());
@@ -569,6 +584,10 @@ public final class FrmPrincipal extends javax.swing.JFrame {
                     : "Error al realizar la venta";
             JOptionPane.showMessageDialog(null, mensaje);
             controllerProducto.ActualizarProducto();
+            rsPnlPrincipal.setPanelSlider(1, pnlInventario, RSPanelsSlider.DIRECT.RIGHT);
+            controllerProducto = new ControladorProducto(conexion.getEntityManager());
+            tblInventario.setModel(new ProxyTblInventario(controllerTipoP.mostrar(cmbCategoria.getSelectedIndex() + 1)));
+            limpiarCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Verifique que el Monto sea mayor al total o que el campo NIT esté lleno");
         }
@@ -588,7 +607,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private void btnIrVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrVentaActionPerformed
         moverPanel(btnIrVenta, pnlVender);
     }//GEN-LAST:event_btnIrVentaActionPerformed
-
+    
     private void moverPanel(JButton boton, JPanel panel) {
         if (!boton.isSelected()) {
             btnInventario.setSelected(false);
@@ -658,5 +677,5 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         model.addAll(controllerTipoP.findTipoProductoEntities());
         cmbCategoria.setModel(model);
     }
-
+    
 }
