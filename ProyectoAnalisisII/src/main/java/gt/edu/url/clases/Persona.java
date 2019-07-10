@@ -14,11 +14,9 @@ import org.apache.commons.codec.digest.DigestUtils;
  */
 public class Persona {
 
-    private Conexion conexion;
     private UsuarioJpaController usuario;
 
     public Persona(Conexion conexion) {
-        this.conexion = conexion;
         usuario = new UsuarioJpaController(conexion.getEntityManager());
     }
 

@@ -155,6 +155,5 @@ public class Producto implements Serializable {
     public String toString() {
         return "Producto{" + "id=" + id + ", nombre=" + nombre + ", cantidad=" + cantidad + ", precio=" + precio + ", descripcion=" + descripcion + ", detalleVentaCollection=" + detalleVentaCollection + ", tipoProductoid=" + tipoProductoid + '}';
     }
-    
-    
+
 }

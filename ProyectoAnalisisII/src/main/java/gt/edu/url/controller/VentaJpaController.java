@@ -28,6 +28,7 @@ import javax.persistence.EntityManager;
 public class VentaJpaController implements Serializable {
 
     private EntityManager em = null;
+
     public VentaJpaController(EntityManager em) {
         this.em = em;
     }
@@ -77,7 +78,8 @@ public class VentaJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } finally {}
+        } finally {
+        }
     }
 
     public void edit(Venta venta) throws IllegalOrphanException, NonexistentEntityException, Exception {
@@ -155,7 +157,8 @@ public class VentaJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {}
+        } finally {
+        }
     }
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
@@ -191,7 +194,8 @@ public class VentaJpaController implements Serializable {
             }
             em.remove(venta);
             em.getTransaction().commit();
-        } finally {}
+        } finally {
+        }
     }
 
     public List<Venta> findVentaEntities() {
@@ -212,7 +216,8 @@ public class VentaJpaController implements Serializable {
                 q.setFirstResult(firstResult);
             }
             return q.getResultList();
-        } finally {}
+        } finally {
+        }
     }
 
     public Venta findVenta(Integer id) {
@@ -229,9 +234,11 @@ public class VentaJpaController implements Serializable {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
-        } finally {}
+        } finally {
+        }
     }
-    public Venta findVentaMaxId(){
+
+    public Venta findVentaMaxId() {
         try {
             return findVenta(getVentaCount());
         } catch (Exception e) {

@@ -45,7 +45,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         btnVentas.setIcon(new ImageIcon("src/main/java/gt/edu/url/Imagenes/ventas.png"));
         btnValidar.setIcon(new ImageIcon("src/main/java/gt/edu/url/Imagenes/validar.png"));
         btnFinalizar.setIcon(new ImageIcon("src/main/java/gt/edu/url/Imagenes/pagar.png"));
-        btnRegresar.setIcon(new  ImageIcon("src/main/java/gt/edu/url/Imagenes/regresar.png"));
+        btnRegresar.setIcon(new ImageIcon("src/main/java/gt/edu/url/Imagenes/regresar.png"));
         this.conexion = conexion;
         controllerTipoP = new TipoProductoJpaController(this.conexion.getEntityManager());
         controllerProducto = new ControladorProducto(this.conexion.getEntityManager());
@@ -518,22 +518,22 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         for (int i = 0; i < seleccion.length; i++) {
             if (seleccion[i] != -1) {
                 String cantidad = JOptionPane.showInputDialog("Ingrese cantidad", "Producto" + tblInventario.getModel().getValueAt(seleccion[i], 1));
-                if(cantidad.length() != 0){
-                    if(Integer.parseInt(cantidad) > (int)tblInventario.getModel().getValueAt(seleccion[i], 3)){
-                    JOptionPane.showMessageDialog(null, "No puede agregar más de lo que hay en Inventario");
+                if (cantidad.length() != 0) {
+                    if (Integer.parseInt(cantidad) > (int) tblInventario.getModel().getValueAt(seleccion[i], 3)) {
+                        JOptionPane.showMessageDialog(null, "No puede agregar más de lo que hay en Inventario");
                     } else {
                         paso = true;
                         controllerProducto.addProducto(new gt.edu.url.clases.Producto((int) tblInventario.getModel().getValueAt(seleccion[i], 0),
-                        (String) tblInventario.getModel().getValueAt(seleccion[i], 1),
-                        (float) tblInventario.getModel().getValueAt(seleccion[i], 2),
-                        Integer.parseInt(cantidad)));
+                                (String) tblInventario.getModel().getValueAt(seleccion[i], 1),
+                                (float) tblInventario.getModel().getValueAt(seleccion[i], 2),
+                                Integer.parseInt(cantidad)));
                     }
-                }
-                else
+                } else {
                     JOptionPane.showMessageDialog(null, "Ingrese cantidad");
+                }
             }
         }
-        if(paso){
+        if (paso) {
             lblTotal.setText("" + controllerProducto.getPrecio());
             tblVender.setModel(new ProxyTblVender(controllerProducto.getProductos()));
             rsPnlPrincipal.setPanelSlider(1, pnlVender, RSPanelsSlider.DIRECT.UP);
@@ -560,11 +560,11 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         //Aquí va la venta
-        if(txtMonto.getText().length() != 0 && (Float.parseFloat(txtMonto.getText())>= Float.parseFloat(lblTotal.getText())) &&
-                txtNit.getText().length() != 0){
-            lblVuelto.setText(""+(Float.parseFloat(txtMonto.getText())-Float.parseFloat(lblTotal.getText())));
+        if (txtMonto.getText().length() != 0 && (Float.parseFloat(txtMonto.getText()) >= Float.parseFloat(lblTotal.getText()))
+                && txtNit.getText().length() != 0) {
+            lblVuelto.setText("" + (Float.parseFloat(txtMonto.getText()) - Float.parseFloat(lblTotal.getText())));
             venta.setProductos(controllerProducto.getProductos());
-            String mensaje = venta.realizarVenta("Oswaldo1234", txtNit.getText(), controllerProducto.getPrecio())
+            String mensaje = venta.realizarVenta(nombreUs, txtNit.getText(), controllerProducto.getPrecio())
                     ? "Venta realizada correctamente"
                     : "Error al realizar la venta";
             JOptionPane.showMessageDialog(null, mensaje);

@@ -64,8 +64,7 @@ public class ControladorProducto {
         for (AbstractProduct product : productos) {
             try {
                 gt.edu.url.entity.Producto producto = controller.findProducto(product.getId());
-                System.out.println(product.getCantidad()+" - "+producto.getCantidad());
-                producto.setCantidad(producto.getCantidad()-product.getCantidad());
+                producto.setCantidad(producto.getCantidad() - product.getCantidad());
                 controller.edit(producto);
             } catch (NonexistentEntityException ex) {
                 Logger.getLogger(ControladorProducto.class.getName()).log(Level.SEVERE, null, ex);

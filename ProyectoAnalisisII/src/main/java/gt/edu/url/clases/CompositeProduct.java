@@ -13,28 +13,28 @@ import java.util.List;
  * @author Héctor Tello <hectortllo@gmail.com>
  */
 public class CompositeProduct extends AbstractProduct {
-    
+
     private List<AbstractProduct> productos = new ArrayList<AbstractProduct>();
-    
-    public CompositeProduct(String nombre){
+
+    public CompositeProduct(String nombre) {
         super(0, "", 0, 0);
     }
-    
+
     @Override
-    public float getPrecio(){
+    public float getPrecio() {
         float precio = 0;
-        for(AbstractProduct producto : productos){
+        for (AbstractProduct producto : productos) {
             precio += producto.getPrecio();
         }
         return precio;
     }
-    
-    public void addProducto(AbstractProduct producto){
+
+    public void addProducto(AbstractProduct producto) {
         this.productos.add(producto);
     }
-    
-    public boolean removerProducto(AbstractProduct producto){
-        return this.productos.remove(producto);        
+
+    public boolean removerProducto(AbstractProduct producto) {
+        return this.productos.remove(producto);
     }
-    
+
 }

@@ -26,6 +26,7 @@ import javax.persistence.EntityManager;
 public class TipoProductoJpaController implements Serializable {
 
     private EntityManager em = null;
+
     public TipoProductoJpaController(EntityManager em) {
         this.em = em;
     }

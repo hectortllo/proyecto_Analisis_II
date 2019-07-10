@@ -142,5 +142,5 @@ public class Cliente implements Serializable {
     public String toString() {
         return "gt.edu.url.entity.Cliente[ id=" + id + " ]";
     }
-    
+
 }

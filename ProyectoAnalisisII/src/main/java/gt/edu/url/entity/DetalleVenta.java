@@ -127,5 +127,5 @@ public class DetalleVenta implements Serializable {
     public String toString() {
         return "gt.edu.url.entity.DetalleVenta[ id=" + id + " ]";
     }
-    
+
 }

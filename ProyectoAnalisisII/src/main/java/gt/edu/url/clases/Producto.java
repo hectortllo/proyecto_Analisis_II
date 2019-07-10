@@ -11,8 +11,7 @@ package gt.edu.url.clases;
  */
 public class Producto extends AbstractProduct {
 
-    
-    public Producto(int id, String nombre, float precio, int cantidad){
+    public Producto(int id, String nombre, float precio, int cantidad) {
         super(id, nombre, precio, cantidad);
     }
 

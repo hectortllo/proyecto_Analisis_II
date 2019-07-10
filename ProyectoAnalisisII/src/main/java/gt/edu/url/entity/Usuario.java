@@ -129,5 +129,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "gt.edu.url.entity.Usuario[ id=" + id + " ]";
     }
-    
+
 }

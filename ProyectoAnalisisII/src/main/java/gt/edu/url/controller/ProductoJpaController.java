@@ -27,6 +27,7 @@ import javax.persistence.EntityManager;
 public class ProductoJpaController implements Serializable {
 
     private EntityManager em = null;
+
     public ProductoJpaController(EntityManager em) {
         this.em = em;
     }
@@ -68,7 +69,8 @@ public class ProductoJpaController implements Serializable {
             }
             em.getTransaction().commit();
         } finally {
-            if (em != null) {}
+            if (em != null) {
+            }
         }
     }
 
@@ -133,7 +135,8 @@ public class ProductoJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {}
+        } finally {
+        }
     }
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
@@ -164,7 +167,8 @@ public class ProductoJpaController implements Serializable {
             }
             em.remove(producto);
             em.getTransaction().commit();
-        } finally {}
+        } finally {
+        }
     }
 
     public List<Producto> findProductoEntities() {
@@ -185,13 +189,15 @@ public class ProductoJpaController implements Serializable {
                 q.setFirstResult(firstResult);
             }
             return q.getResultList();
-        } finally {}
+        } finally {
+        }
     }
 
     public Producto findProducto(Integer id) {
         try {
             return em.find(Producto.class, id);
-        } finally {}
+        } finally {
+        }
     }
 
     public int getProductoCount() {
@@ -201,7 +207,8 @@ public class ProductoJpaController implements Serializable {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
-        } finally {}
+        } finally {
+        }
     }
-    
+
 }

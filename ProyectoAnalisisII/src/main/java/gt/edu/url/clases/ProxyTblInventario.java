@@ -10,6 +10,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import gt.edu.url.entity.Producto;
+
 /**
  *
  * @author Oswaldo Alvarez <mynoswaldo@gmail.com>

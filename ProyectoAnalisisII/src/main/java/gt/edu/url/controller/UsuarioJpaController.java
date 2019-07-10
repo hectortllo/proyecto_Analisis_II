@@ -187,11 +187,12 @@ public class UsuarioJpaController implements Serializable {
             return null;
         }
     }
+
     public Usuario findId(String nombreUsuario) {
         try {
             return (Usuario) em.createNamedQuery("Usuario.findByNombreUsuario").setParameter("nombreUsuario", nombreUsuario).getSingleResult();
         } catch (Exception e) {
-            return  null;
+            return null;
         }
     }
 }
