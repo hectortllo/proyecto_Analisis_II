@@ -560,11 +560,11 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         //Aquí va la venta
-        if(txtMonto.getText().length() != 0 && (Float.parseFloat(txtMonto.getText())> Float.parseFloat(lblTotal.getText())) &&
+        if(txtMonto.getText().length() != 0 && (Float.parseFloat(txtMonto.getText())>= Float.parseFloat(lblTotal.getText())) &&
                 txtNit.getText().length() != 0){
             lblVuelto.setText(""+(Float.parseFloat(txtMonto.getText())-Float.parseFloat(lblTotal.getText())));
             venta.setProductos(controllerProducto.getProductos());
-            String mensaje = venta.realizarVenta("Oswaldo1234", txtNit.getText(), controllerProducto.getPrecio())
+            String mensaje = venta.realizarVenta("usuario", txtNit.getText(), controllerProducto.getPrecio())
                     ? "Venta realizada correctamente"
                     : "Error al realizar la venta";
             JOptionPane.showMessageDialog(null, mensaje);
